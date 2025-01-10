@@ -10,9 +10,8 @@ const userSchema = new mongoose.Schema({
     },
     last_name: {
         type: String,
-        required: [true, "Last name not provided"],
+        default: "",
         maxlength: 30,
-        minlength: 3
     },
     email: {
         type: String,
@@ -30,11 +29,22 @@ const userSchema = new mongoose.Schema({
     },
     headline: {
         type: String,
+        default: "",
         maxlength: 60
     },
     biography: {
         type: String,
+        default: "",
+    },
+    linkedIn: {
+        type: String,
+        default: "",
+    }, 
+    youtube: {
+        type: String,
+        default: "",
     }
+
 })
 
 export default mongoose.model('User', userSchema);

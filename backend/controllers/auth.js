@@ -9,7 +9,6 @@ export const register = async (req, res, next) => {
     const last_name = nameParts.slice(1).join(' ') || '';
 
     const user = await User.create({first_name, last_name, email, password});
-    // console.log(user);
     res.status(StatusCodes.CREATED).json({user: user.first_name});
 }
 
