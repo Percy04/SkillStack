@@ -22,9 +22,6 @@ function SearchBar() {
             <li>
               <a href="#">Computer Accessories</a>
             </li>
-            <li>
-              <a href="#">Health and Personal Care</a>
-            </li>
           </ul>
         </div>
         <input
