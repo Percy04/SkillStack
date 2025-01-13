@@ -1,20 +1,23 @@
 header {
-    border: solid 1px black;
+    border-bottom: solid 1px black;
     display: flex;
-    min-height: 65px;
+    min-height: 75px;
+    /* max-height: 70px; */
     justify-content: space-between;
     align-items: center;
     padding-left: 10px;
     padding-right: 10px;
+    gap: 50px;
 }
 
 header img {
     width: 24px;
 }
 
-header p {
-    padding: 0;
-    margin: 0;
+
+header a {
+    text-decoration: none;
+    color: black;
 }
 
 #skillstack {
@@ -22,7 +25,29 @@ header p {
     font-weight: 700;
 }
 
-.search-bar {
+.header-right {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    /* border: solid 1px black; */
+    /* width: 100%; */
+}
+
+#myskills-text{
+    white-space: nowrap;
+}
+
+
+#user-icon {
+    padding: 0;
+    margin: 0;
+    border: solid 1px black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
+

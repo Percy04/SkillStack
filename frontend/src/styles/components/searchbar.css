@@ -1,86 +1,9 @@
-/* .input-group {
-  display: flex;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  overflow: hidden;
-  width: 100%;
-}
-
-.input-group .btn:first-child {
-  flex: 0 0 auto;
-  background-color: #fff;
-  color: #000;
-  padding: 8px 12px;
-}
-
-.input-group .form-control {
-  flex: 1 1 auto;
-  border: none;
-  padding: 8px 12px;
-}
-
-.input-group .btn:last-child {
-  flex: 0 0 auto;
-  background-color: #fff;
-  color: #000;
-  padding: 8px 12px;
-  border-left: 1px solid #ccc;
-}
-
-.input-group .btn i {
-  font-size: 16px;
-}
-
-.input-group .form-control:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.container{
-  margin-top:5%;
-}
-
-.scrollable-dropdown{
-    height: auto;
-    max-height:320px;  
-    overflow-x: hidden;
-}
-
-.dropdown a {
-  display: block;
-  color: black;
-  text-decoration: none;
-  padding: 10px 15px;
-}
-
-.dropdown .content {
-  display: none;
-  position: absolute;
-  background-color: hsl(0, 0%, 95%);
-  min-width: 100px;
-  box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
-}
-
-.dropdown:hover .content {
-  display: block;
-}
-
-.dropdown:hover button {
-  background-color: hsl(0, 0%, 70%);
-}
-
-.dropdown a:hover {
-  background-color: hsl(0, 0%, 90%);
-}
-
-
- */
-
 /* Container for the search bar */
 .search-bar {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  width: 100%;
+  min-width: 300px;
 }
 
 /* Styling the input group */
@@ -88,7 +11,6 @@
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 500px;
   border: 1px solid #ddd;
   overflow: hidden;
   background: #f8f9fa;
@@ -109,13 +31,6 @@
 }
 
 /* Input field */
-.form-control {
-  flex: 1;
-  border: none;
-  padding: 10px;
-  font-size: 14px;
-}
-
 .input-form {
   flex: 1;
   border: none;
