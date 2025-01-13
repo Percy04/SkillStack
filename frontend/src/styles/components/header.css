@@ -21,3 +21,8 @@ header p {
     font-size: 1.5rem;
     font-weight: 700;
 }
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}

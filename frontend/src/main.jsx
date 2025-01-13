@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import Header from './components/Header.jsx'
 import "./styles/normalize.css";
+import SearchBar from './components/SearchBar.jsx';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

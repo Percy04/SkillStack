@@ -1,13 +1,16 @@
 import "../styles/components/header.css";
 import React from "react";
 import SearchBar from "./SearchBar";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Header() {
   return (
     <header className="header-container">
       <p id="skillstack">SkillStack</p>
       {/* <input type="search" name="search" id="search" /> */}
-      <SearchBar />
+      <div className="search-bar">
+        <SearchBar />
+      </div>
       <p>Master</p>
       <p>My skills</p>
       <a href="www.youtube.com">
