@@ -1,6 +1,7 @@
 import connectDB from "./db/connect.js";
 import dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 
 //Routes
 import instructorRouter from './routes/instructor.js';
@@ -14,6 +15,13 @@ const app = express();
 app.use(express.json());
 
 
+const corsOptions = {
+  origin:"http://localhost:5173",
+  credentials: true,
+  optionSucessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("I'm  great");
