@@ -1,0 +1,79 @@
+:root {
+    --margin-space: 180px;
+    --radius: 6px;
+}
+
+#welcomeText {
+    margin: 0;
+    padding: 0;
+}
+
+/* Center the "or register with" */
+.form-right > h6 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   /* margin: 10px 0 20px;  */
+   margin: 20px 0 20px 0;
+   font-size: 0.6rem;
+} 
+
+.form-right > h6 span { 
+    background:#fff; 
+    padding:0 10px; 
+}
+
+#signup-link {
+    font-size: 0.8rem;
+}
+
+.form-container {
+    display: flex;
+    margin-left: var(--margin-space);
+    margin-right: var(--margin-space);
+    border: solid 1px black;
+    justify-content: space-evenly;
+}
+
+
+.form-container > * {
+    border: solid 1px black;
+}
+
+.form-right {
+    padding: 2rem;
+}
+
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-name {
+    display: flex;
+    flex: 1;
+    /* width: 100%; */
+    /* border: dotted 1px blue; */
+    gap: 1rem;
+}
+
+.input-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+input[type="text"] {
+    width: 100%;
+    /* border: none; */
+}
+
+input, button {
+    border-radius: var(--radius);
+    border: solid 1px black;
+    padding: 0.5rem;
+}

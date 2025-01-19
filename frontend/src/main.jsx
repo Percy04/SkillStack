@@ -5,10 +5,10 @@ import Header from './components/Header.jsx'
 import "./styles/normalize.css";
 import SearchBar from './components/SearchBar.jsx';
 import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./pages/Login.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Header />
-    <App />
+    <Login></Login>
   </StrictMode>,
 )
