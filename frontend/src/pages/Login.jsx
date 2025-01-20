@@ -29,13 +29,14 @@ function Login() {
   }
 
   return (
-    <div className="login-container">
+    <>
       <Header />
+    <div className="login-container">
 
       <div className="form-container">
         {/* Add floating reviews here */}
         <div className="form-left">
-          <h1>slkfjd</h1>
+          <h1>Namaste!</h1>
         </div>
 
         <form action={handleLogin} className="form-right">
@@ -74,6 +75,7 @@ function Login() {
         </form>
       </div>
     </div>
+    </>
   );
 }
 
