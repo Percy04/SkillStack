@@ -30,7 +30,7 @@ function Signup() {
 
   return (
     <div className="signup-container">
-      <Header />
+      {/* <Header /> */}
 
       <div className="form-container">
         {/* Add floating reviews here */}

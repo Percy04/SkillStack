@@ -13,8 +13,6 @@ import passport from "passport";
 import OAuth from "passport-google-oauth2";
 const OAuth2Strategy = OAuth.Strategy;
 
-
-
 //Routes
 import instructorRouter from "./routes/instructor.js";
 import authRouter from "./routes/auth.js";
@@ -60,7 +58,7 @@ passport.use(
       scope: ["profile", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log("profile", profile)
+      console.log("profile", profile);
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
@@ -90,15 +88,34 @@ passport.deserializeUser((user, done) => {
 });
 
 // initial google oauth login
-app.get("/auth/google", passport.authenticate("google", {scope:["profile", "email"]}));
-app.get("/auth/google/callback", passport.authenticate("google", {
-  successRedirect: "http://localhost:5173/dashboard",
-  failureRedirect: "http://localhost:5173/login"
-}))
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:5173/dashboard",
+    failureRedirect: "http://localhost:5173/login",
+  })
+);
 
+app.get("/login/success", async (req, res) => {
+  console.log("reqqqq", req.user);
+  if (req.user) {
+    res.status(200).json({ message: "User login", user: req.user });
+  } else {
+    res.status(400).json({ message: "Not Authorized" });
+  }
+});
 
+app.get("/logout", async (req, res, next) => {
+  req.logout(function (err) {
+    if (err) return next(err);
 
-
+    res.redirect("http://localhost:5173");
+  });
+});
 
 const port = process.env.PORT || 5001;
 const start = async () => {

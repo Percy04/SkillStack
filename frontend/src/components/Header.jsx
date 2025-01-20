@@ -1,9 +1,36 @@
 import "../styles/components/header.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 function Header() {
+
+  const [userData, setUserData] = useState({});
+
+  const getUser = async() => {
+    try {
+      const response = await axios.get("http://localhost:5000/login/success", {withCredentials: true}) 
+      console.log("Response: ", response);
+      setUserData(() => response.data.user);
+    } catch (error) {
+      console.log("Not logged in: ", error);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [])
+
+  const logout = () => {
+    window.open("http://localhost:5000/logout", "_self");
+  }
+
+  // useEffect(() => {
+  //   console.log("userData: ", userData);
+  // }, [userData])
+
+
   return (
     <header className="header-container">
       <a href="#mainpage" id="skillstack">SkillStack</a>
@@ -13,7 +40,15 @@ function Header() {
       </div>
       <div className="header-right">
         <a href="www.youtube.com">Master</a>
-        <a id="myskills-text" href="www.youtube.com">My skills </a>
+        {
+          Object.keys(userData)?.length > 0 ? (
+            <>
+              <a id="myskills-text" href="www.youtube.com">My skills </a>
+              <a id="logout-text" onClick={logout}>Logout</a>
+
+            </>
+          ) : (<div>Login</div>)
+        }
         <a href="www.youtube.com">
           <img src="../../public/wishlist.png" alt="wishlist" />
         </a>
