@@ -23,6 +23,11 @@ function Login() {
       });
   }
 
+
+  const loginwithgoogle = () => {
+    window.open("http://localhost:5000/auth/google/callback", "_self");
+  }
+
   return (
     <div className="login-container">
       <Header />
@@ -63,7 +68,9 @@ function Login() {
             <span>Or log in with</span>
           </h6>
 
-          <button>Google</button>
+          <button type="button" onClick={loginwithgoogle}>Sign in with google</button>
+
+          {/* <button>Google</button> */}
         </form>
       </div>
     </div>

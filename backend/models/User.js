@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
+  googleId: {
+    type: String
+  },
   first_name: {
     type: String,
     required: [true, "First name not provided"],
@@ -25,7 +28,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password not proided"],
+    default: "password",
+    // required: [true, "Password not proided"],
     minlength: 6,
   },
   headline: {
