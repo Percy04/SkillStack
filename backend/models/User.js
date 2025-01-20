@@ -4,15 +4,10 @@ import bcryptjs from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
   googleId: {
-    type: String
-  },
-  first_name: {
     type: String,
-    required: [true, "First name not provided"],
-    maxlength: 30,
-    minlength: 3,
+    default: "",
   },
-  last_name: {
+  name: {
     type: String,
     default: "",
     maxlength: 30,
@@ -28,9 +23,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    default: "password",
+    default: "",
     // required: [true, "Password not proided"],
-    minlength: 6,
   },
   headline: {
     type: String,
@@ -52,13 +46,15 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function () {
-  const salt = await bcryptjs.genSalt(10);
-  this.password = await bcryptjs.hash(this.password, salt);
+  if (this.password !== "") {
+    const salt = await bcryptjs.genSalt(10);
+    this.password = await bcryptjs.hash(this.password, salt);
+  }
 });
 
 userSchema.methods.createJWT = async function () {
   return jwt.sign(
-    { userId: this._id, name: this.first_name },
+    { userId: this._id, name: this.name },
     process.env.JWT_SECRET
     // {
     //   expiresIn: process.env.JWT_LIFETIME,

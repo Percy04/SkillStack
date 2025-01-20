@@ -29,15 +29,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
-  res.send("I'm  great");
+  res.send("Yes backend works");
 });
-
-app.use("/auth", authRouter);
-app.use("/instructor", instructorRouter);
-// app.use('/auth', authenticateUser);
 
 // setup session
 app.use(
+  // session settings
   session({
     secret: process.env.JWT_SECRET,
     resave: false,
@@ -57,6 +54,8 @@ passport.use(
       callbackURL: "http://localhost:5000/auth/google/callback",
       scope: ["profile", "email"],
     },
+
+    //Verify callback once callbackURL is called
     async (accessToken, refreshToken, profile, done) => {
       console.log("profile", profile);
       try {
@@ -64,7 +63,7 @@ passport.use(
         if (!user) {
           user = new User({
             googleId: profile.id,
-            first_name: profile.displayName,
+            name: profile.displayName,
             email: profile.emails[0].value,
           });
 
@@ -87,18 +86,8 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-// initial google oauth login
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "http://localhost:5173/dashboard",
-    failureRedirect: "http://localhost:5173/login",
-  })
-);
+app.use("/auth", authRouter);
+app.use("/instructor", instructorRouter);
 
 app.get("/login/success", async (req, res) => {
   console.log("reqqqq", req.user);

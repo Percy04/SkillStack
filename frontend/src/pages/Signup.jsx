@@ -10,13 +10,13 @@ function Signup() {
     const email = formData.get("email");
     const password = formData.get("password");
 
-    const fullName = firstName + " " + lastName;
-    console.log(fullName, email, password);
+    const name = firstName + " " + lastName;
+    // console.log(fullName, email, password);
 
     //Make port number dynamic
     axios
       .post("http://localhost:5000/auth/register", {
-        fullName,
+        name,
         email,
         password,
       })
@@ -30,7 +30,7 @@ function Signup() {
 
   return (
     <div className="signup-container">
-      {/* <Header /> */}
+      <Header />
 
       <div className="form-container">
         {/* Add floating reviews here */}

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import Header from "../components/Header";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Dashboard() {
 
   return (
     <div>
+        <Header></Header>
       <h1>Dashboard</h1>
     </div>
   );
