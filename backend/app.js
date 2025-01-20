@@ -6,6 +6,9 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+import notFoundMiddleware from "./middleware/not-found.js";
+import errorHandlerMiddleware from "./middleware/error-handler.js";
+
 // Google Signin
 import User from "./models/User.js";
 import session from "express-session";
@@ -18,7 +21,7 @@ import instructorRouter from "./routes/instructor.js";
 import authRouter from "./routes/auth.js";
 
 //Middleware
-// import authenticateUser from './middleware/authentication.js';
+import authenticateUser from "./middleware/authentication.js";
 
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -28,9 +31,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/", (req, res) => {
-  res.send("Yes backend works");
-});
+// app.get("/", (req, res) => {
+//   res.send("Yes backend works");
+// });
 
 // setup session
 app.use(
@@ -59,7 +62,9 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       console.log("profile", profile);
       try {
-        let user = await User.findOne({ googleId: profile.id });
+        let user = await User.findOne({ email: profile.emails[0].value });
+        console.log("USER: ", user);
+
         if (!user) {
           user = new User({
             googleId: profile.id,
@@ -70,7 +75,9 @@ passport.use(
           await user.save();
         }
 
-        return done(null, user);
+        const token = await user.createJWT();
+
+        return done(null, { user, token });
       } catch (error) {
         return done(error, null);
       }
@@ -86,8 +93,12 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+app.get("/dashboard", authenticateUser, (req, res) => {
+  res.json({ message: "Authenticated", user: req.user });
+});
+
 app.use("/auth", authRouter);
-app.use("/instructor", instructorRouter);
+app.use("/instructor", authenticateUser, instructorRouter);
 
 app.get("/login/success", async (req, res) => {
   console.log("reqqqq", req.user);
@@ -105,6 +116,10 @@ app.get("/logout", async (req, res, next) => {
     res.redirect("http://localhost:5173");
   });
 });
+
+
+// app.use(notFoundMiddleware);
+// app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 5001;
 const start = async () => {

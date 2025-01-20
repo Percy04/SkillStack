@@ -32,6 +32,10 @@ body {
   margin-top: 40px;
 }
 
+.signup-container {
+  margin-top: 40px;
+}
+
 /* Use a flex container to split the page into two columns */
 .form-container {
   display: flex;
@@ -45,7 +49,6 @@ body {
 
 /* Left side (e.g., for an image, brand info, or illustration) */
 .form-left {
-  /* margin: 10px; */
   border-top-left-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
   flex: 1;
@@ -78,9 +81,6 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 3rem;
-  /* box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
-  /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
-  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
   position: relative;
   border-top-right-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
@@ -107,7 +107,13 @@ body {
 
 /* Input section */
 .input-section {
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.input-name {
+  display: flex;
+  gap: 1rem;
 }
 
 .input-text {
@@ -117,7 +123,7 @@ body {
 }
 
 /* Style the inputs */
-.input-text input {
+.input-text input, .input-section input {
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 4px;
@@ -128,6 +134,10 @@ body {
 
 .input-text input:focus {
   border-color: var(--secondary-color);
+}
+
+#google-icon {
+  margin: 1px 10px 1px 10px;
 }
 
 /* Default button styles */
@@ -183,4 +193,17 @@ body {
   .form-right {
     box-shadow: none;
   }
+}
+
+.loginErrorText.hide{
+  display: none;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.loginErrorText.show{
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
 }

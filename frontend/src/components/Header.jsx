@@ -7,15 +7,42 @@ import axios from "axios";
 function Header() {
   const [userData, setUserData] = useState({});
 
+  // const getUser = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:5000/login/success", {
+  //       withCredentials: true,
+  //     });
+  //     // console.log("Response: ", response);
+  //     setUserData(() => response.data.user);
+  //   } catch (error) {
+  //     console.log("Not logged in: ", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   // getUser();
+  // }, []);
+
   const getUser = async () => {
+    const token = localStorage.getItem("token");
+    console.log("TOKEN: " + token);
     try {
-      const response = await axios.get("http://localhost:5000/login/success", {
-        withCredentials: true,
+      const response = await axios.get("http://localhost:5000/dashboard", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      console.log("Response: ", response);
-      setUserData(() => response.data.user);
+
+      console.log("RESPONSE: ", response.data);
+      // console.log("USERDATA: ", Object.keys(userData));
+      // window.open.href="http://localhost:5173/error";
     } catch (error) {
-      console.log("Not logged in: ", error);
+      console.log(
+        "error accessing protected route: ",
+        error.response.data.message
+      );
+      // window.open.href="http://localhost:5173/error";
+      navigate("*");
     }
   };
 
@@ -49,6 +76,9 @@ function Header() {
             </a>
             <a id="logout-text" onClick={logout}>
               Logout
+            </a>
+            <a id="profile-text" >
+              Hi
             </a>
           </>
         ) : (

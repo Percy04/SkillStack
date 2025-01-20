@@ -1,4 +1,6 @@
-const { StatusCodes } = require('http-status-codes')
+import { StatusCodes } from 'http-status-codes'
+import { CustomAPIError } from '../errors/index.js';
+
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
     // set default
@@ -6,9 +8,9 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || 'Something went wrong try again later',
   }
 
-  // if (err instanceof CustomAPIError) {
-  //   return res.status(err.statusCode).json({ msg: err.message })
-  // }
+  if (err instanceof CustomAPIError) {
+    return res.status(err.statusCode).json({ msg: err.message })
+  }
 
   if (err.name === 'ValidationError') {
     customError.msg = Object.values(err.errors)
@@ -30,4 +32,4 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   return res.status(customError.statusCode).json({ msg: customError.msg })
 }
 
-module.exports = errorHandlerMiddleware
+export default errorHandlerMiddleware
