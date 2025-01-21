@@ -6,13 +6,11 @@ import { useState } from "react";
 function Login() {
   const [loginText, setLoginText] = useState("loginErrorText hide");
 
-
-
   function handleLogin(formData) {
     const email = formData.get("email");
     const password = formData.get("password");
 
-    console.log(email, password);
+    // console.log(email, password);
 
     //Make port number dynamic
     axios
@@ -35,7 +33,7 @@ function Login() {
       });
   }
 
-  const loginwithgoogle = () => {
+  const loginWithGoogle = async () => {
     window.open("http://localhost:5000/auth/google/callback", "_self");
   };
 
@@ -81,7 +79,7 @@ function Login() {
               <span>Or log in with</span>
             </h6>
 
-            <button type="button" onClick={loginwithgoogle}>
+            <button type="button" onClick={loginWithGoogle}>
               <img
                 id="google-icon"
                 src="/google.png"

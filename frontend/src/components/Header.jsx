@@ -3,29 +3,35 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({});
 
-  // const getUser = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:5000/login/success", {
-  //       withCredentials: true,
-  //     });
-  //     // console.log("Response: ", response);
-  //     setUserData(() => response.data.user);
-  //   } catch (error) {
-  //     console.log("Not logged in: ", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // getUser();
-  // }, []);
-
   const getUser = async () => {
-    const token = localStorage.getItem("token");
-    console.log("TOKEN: " + token);
+    let token = localStorage.getItem("token");
+    // console.log("Token: " + token);
+    if (!token) {
+      // console.log("No token");
+      //If Google sign in, then set token to localStorage
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/login/success",
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log("Response: ", response.data.token);
+        localStorage.setItem("token", response.data.token);
+        // setUserData(() => response.data.user);
+      } catch (error) {
+        console.log("Not logged in: ", error);
+        return;
+      }
+      token = localStorage.getItem("token");
+    }
+
     try {
       const response = await axios.get("http://localhost:5000/dashboard", {
         headers: {
@@ -33,15 +39,14 @@ function Header() {
         },
       });
 
-      console.log("RESPONSE: ", response.data);
-      // console.log("USERDATA: ", Object.keys(userData));
-      // window.open.href="http://localhost:5173/error";
+      // console.log("RESPONSE after token: ", response);
+
+      setUserData(() => response.data.user);
     } catch (error) {
       console.log(
         "error accessing protected route: ",
         error.response.data.message
       );
-      // window.open.href="http://localhost:5173/error";
       navigate("*");
     }
   };
@@ -51,12 +56,9 @@ function Header() {
   }, []);
 
   const logout = () => {
+    localStorage.removeItem("token");
     window.open("http://localhost:5000/logout", "_self");
   };
-
-  // useEffect(() => {
-  //   console.log("userData: ", userData);
-  // }, [userData])
 
   return (
     <header className="header-container">
@@ -77,9 +79,7 @@ function Header() {
             <a id="logout-text" onClick={logout}>
               Logout
             </a>
-            <a id="profile-text" >
-              Hi
-            </a>
+            <a id="profile-text">{userData.name}</a>
           </>
         ) : (
           <div>Login</div>

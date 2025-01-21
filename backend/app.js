@@ -76,6 +76,7 @@ passport.use(
         }
 
         const token = await user.createJWT();
+        // localStorage.setItem("token", token);
 
         return done(null, { user, token });
       } catch (error) {
@@ -93,30 +94,38 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.get("/dashboard", authenticateUser, (req, res) => {
+app.get("/dashboard", authenticateUser, async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+  // const user = await User.findOne({googleId: req.user})
+  // console.log("Dashboard info: ", req);
   res.json({ message: "Authenticated", user: req.user });
 });
 
-app.use("/auth", authRouter);
-app.use("/instructor", authenticateUser, instructorRouter);
-
 app.get("/login/success", async (req, res) => {
-  console.log("reqqqq", req.user);
+  // if (req.user) {
+  //   console.log("REQ: ", req.user.token);
+  // }
   if (req.user) {
-    res.status(200).json({ message: "User login", user: req.user });
+    res.status(200).json({ message: "Authenticated", token: req.user.token });
   } else {
     res.status(400).json({ message: "Not Authorized" });
   }
 });
 
+app.get("/protected", authenticateUser, (req, res) => {
+  res.status(200).json({ message: "Protected content", user: req.user });
+});
+
+app.use("/auth", authRouter);
+app.use("/instructor", authenticateUser, instructorRouter);
+
 app.get("/logout", async (req, res, next) => {
   req.logout(function (err) {
     if (err) return next(err);
 
-    res.redirect("http://localhost:5173");
+    res.redirect("http://localhost:5173/login");
   });
 });
-
 
 // app.use(notFoundMiddleware);
 // app.use(errorHandlerMiddleware)

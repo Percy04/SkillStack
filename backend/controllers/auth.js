@@ -16,7 +16,9 @@ export const login = async (req, res, next) => {
 
   if (!email || !password) {
     // throw new BadRequestError("Please provide email and password");
-    res.status(StatusCodes.BAD_REQUEST).json({message: "Please provide email and password"})
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Please provide email and password" });
     return;
   }
 
@@ -25,14 +27,16 @@ export const login = async (req, res, next) => {
     // throw new UnauthenticatedError(
     //   "Email does not exist. Please Sign Up first."
     // );
-    res.status(StatusCodes.BAD_REQUEST).json({message: "Email does not exist."})
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "Email does not exist." });
     return;
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
     // throw new UnauthenticatedError("Wrong Password");
-    res.status(StatusCodes.BAD_REQUEST).json({message: "Wrong password"})
+    res.status(StatusCodes.BAD_REQUEST).json({ message: "Wrong password" });
     return;
   }
 
@@ -44,8 +48,6 @@ export const login = async (req, res, next) => {
 };
 
 export const googleAuthenticate = (req, res, next) => {
-  // passport.authenticate(...) returns a middleware function
-  // We must call it immediately with (req, res, next) so that it runs.
   passport.authenticate("google", { scope: ["profile", "email"] })(
     req,
     res,
@@ -55,7 +57,7 @@ export const googleAuthenticate = (req, res, next) => {
 
 export const googleCallback = (req, res, next) => {
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173/dashboard",
+    successRedirect: `http://localhost:5173/dashboard`,
     failureRedirect: "http://localhost:5173/login",
   })(req, res, next);
 };
