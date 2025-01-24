@@ -32,7 +32,7 @@ function Signup() {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <div className="signup-container">
         <div className="form-container">
           {/* Add floating reviews here */}

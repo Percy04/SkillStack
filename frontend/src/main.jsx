@@ -7,14 +7,15 @@ import SearchBar from "./components/SearchBar.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./pages/Login.jsx";
 import { BrowserRouter } from "react-router-dom";
+import Course from "../../backend/models/Course.js";
+import CourseLayout from "./components/layout/CourseLayout.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <Login></Login> */}
-
     <BrowserRouter>
-      <Header />
-      <App></App>
+      {/* <App></App> */}
+      {/* <CourseLayout></CourseLayout> */}
     </BrowserRouter>
+      <App></App>
   </StrictMode>
 );

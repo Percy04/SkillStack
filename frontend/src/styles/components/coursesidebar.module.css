@@ -1,0 +1,18 @@
+.item {
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  border-left: 4px solid transparent;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.item:hover {
+  background-color: #f4f4f4;
+}
+
+.active {
+  background-color: #e0f7fa; /* Highlight color for the active section */
+  border-left-color: #003566; /* Accent border for the active section */
+  font-weight: bold;
+}

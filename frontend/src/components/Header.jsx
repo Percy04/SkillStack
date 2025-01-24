@@ -62,28 +62,25 @@ function Header() {
 
   return (
     <header className="header-container">
-      <a href="#mainpage" id="skillstack">
+      <a href="http://localhost:5173/dashboard" id="skillstack">
         SkillStack
       </a>
-      {/* <input type="search" name="search" id="search" /> */}
       <div className="search-bar">
         <SearchBar />
       </div>
       <div className="header-right">
-        <a href="www.youtube.com">Master</a>
+        <a href="http://localhost:5173/teacher">Teacher</a>
         {Object.keys(userData)?.length > 0 ? (
           <>
             <a id="myskills-text" href="www.youtube.com">
-              My skills{" "}
+              My skills
             </a>
             <a id="logout-text" onClick={logout}>
               Logout
             </a>
             <a id="profile-text">{userData.name}</a>
           </>
-        ) : (
-          <div>Login</div>
-        )}
+        ) : ""}
         <a href="www.youtube.com">
           <img src="../../public/wishlist.png" alt="wishlist" />
         </a>

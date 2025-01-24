@@ -39,7 +39,7 @@ function Login() {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <div className="login-container">
         <div className="form-container">
           {/* Add floating reviews here */}

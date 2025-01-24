@@ -1,0 +1,135 @@
+/* General Styles */
+.coursesContainer {
+  max-width: 85rem;
+  margin: 20px auto;
+  padding: 20px;
+  color: #333;
+}
+
+.coursesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.coursesHeader h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.coursesControls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Controls */
+.searchInput {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.searchButton {
+  padding: 8px;
+  border: none;
+  background-color: purple;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.sortDropdown {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.newCourseButton {
+  padding: 8px 16px;
+  background-color: purple;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Course Cards */
+.coursesList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.courseCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 7rem;
+  /* border-color: rgba(0, 0, 0, 0.16) */
+}
+
+.courseInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.courseIcon {
+  font-size: 30px;
+}
+
+.courseDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.courseTitle {
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.courseMeta {
+  margin: 5px 0 0;
+  color: #888;
+}
+
+.divider {
+  margin: 0 5px;
+}
+
+/* Progress Bar */
+.courseProgress p {
+  margin: 0 0 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.progressBar {
+  width: 200px;
+  height: 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: purple;
+  width: 0%;
+  transition: width 0.3s;
+  border-radius: 4px 0 0 4px;
+}
