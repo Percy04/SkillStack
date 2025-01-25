@@ -22,6 +22,15 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: String
     },
+    concept: {
+        type: String
+    }, 
+    course_image_url: {
+        type: String
+    },
+    promo_video_url: {
+        type: String
+    }
     
 })
 
