@@ -7,7 +7,9 @@ export const createPublishCourse = async (req, res, next) => {
   const formData = req.body.formData;
   const existingCourse = await PublishCourse.findOne({ title: formData.title });
   if (existingCourse) {
-    res.status().json({message: "Course with this title exists with this title"});
+    res
+      .status()
+      .json({ message: "Course with this title exists with this title" });
   }
 
   try {
@@ -16,6 +18,21 @@ export const createPublishCourse = async (req, res, next) => {
   } catch {
     console.log("Course couldn't be created");
     res.json({ message: "Course couldn't be created" });
+  }
+};
+
+export const PublishCourseDetails = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  try {
+    const course = await PublishCourse.findById(courseId);
+    if (!course) {
+      res.status(401).json({message:"Course not created/doesn't exist"});
+    } else {
+      console.log(course);
+      res.status(201).json(course);
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 

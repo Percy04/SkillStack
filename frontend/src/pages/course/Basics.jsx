@@ -16,6 +16,18 @@ function Basics() {
     promo_video_url: "",
   });
 
+  useEffect(() => {
+    const url = (window.location.pathname).split("/");
+    axios.get(`http://localhost:5000/instructor/course/${url[3]}/manage/basics`)
+    .then(function (res) {
+      console.log(res.data);
+        setFormData(res.data);
+    })
+    .catch(function (err) {
+      console.log(err);
+    })
+  }, [])
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -45,10 +57,6 @@ function Basics() {
 
     fetchUser();
   }, []);
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
 
   return (
     <div className={styles.container}>
