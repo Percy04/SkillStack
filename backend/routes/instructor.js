@@ -1,11 +1,11 @@
 import express from "express";
 const router = express.Router();
 
-import {getCourses, getPublishCourse, createPublishCourse, PublishCourseDetails} from '../controllers/courses.js';
+import {updatePublishCourse, getAllPublishCourses, createPublishCourse, PublishCourseDetails} from '../controllers/courses.js';
 
 router.post('/course', createPublishCourse);
-router.route('/course/:courseId/manage/basics').get(PublishCourseDetails)
-router.get('/courses', getPublishCourse);
+router.route('/course/:courseId/manage/basics').get(PublishCourseDetails).post(updatePublishCourse);
+router.get('/courses', getAllPublishCourses);
 
 export default router;
 

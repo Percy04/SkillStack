@@ -16,9 +16,12 @@ function Basics() {
     promo_video_url: "",
   });
 
+  const courseId = (window.location.pathname).split("/")[3];
+
   useEffect(() => {
     const url = (window.location.pathname).split("/");
-    axios.get(`http://localhost:5000/instructor/course/${url[3]}/manage/basics`)
+    // courseId = url[3];
+    axios.get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
     .then(function (res) {
       console.log(res.data);
         setFormData(res.data);
@@ -41,7 +44,7 @@ function Basics() {
     console.log("Form submitted:", formData);
 
     axios
-      .post("http://localhost:5000/instructor/course/manage/basics", {
+      .post(`http://localhost:5000/instructor/course/${courseId}/manage/basics`, {
         formData,
       })
       .catch(function (error) {

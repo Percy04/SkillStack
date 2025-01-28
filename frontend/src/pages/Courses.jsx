@@ -50,12 +50,9 @@ function Courses() {
 
 
   const handleNewCourseClick = async () => {
-    //First create new course
     try {
       axios.post("http://localhost:5000/instructor/course")
       .then(function (res) {
-        // console.log(res.data);
-        // console.log("Dawg");
         const id = res.data.courseId;
         navigate(`/instructor/course/${id}/manage/basics`);
       })

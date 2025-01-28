@@ -28,19 +28,25 @@ export const PublishCourseDetails = async (req, res, next) => {
   }
 };
 
-export const getPublishCourse = async (req, res, next) => {
-  const courseId = req.params.courseId;
+export const getAllPublishCourses = async (req, res, next) => {
   try {
     const courses = await PublishCourse.find({});
-    console.log("ID: " + courseId);
+    // console.log("ID: " + courseId);
     res.status(201).json(courses);
   } catch (error) {
     res.json({ message: "No courses found" });
   }
 };
 
-export const updatePublishCourse = async (req, res, next) => {};
-
-export const getCourses = (req, res, next) => {
-  res.send("yes");
-};
+export const updatePublishCourse = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  const formData = req.body.formData;
+  console.log("Req: ", req.body.formData);
+  try {
+    const courses = await PublishCourse.findOneAndReplace({_id: courseId}, formData)
+    res.status(201).json({courses})
+  } catch (error) {
+    console.log("nahi hua: " + error);
+  }
+  // res.send("Hi");
+}
