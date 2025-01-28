@@ -3,44 +3,37 @@ import styles from "../styles/pages/courses.module.css";
 import InstructorHeader from "../components/Instructorheader";
 import { useState, useEffect } from "react";
 import getUser from "../utils/getUser";
-
-const courses = [
-  {
-    id: 1,
-    title: "sdf",
-    status: "DRAFT",
-    visibility: "Public",
-    progress: 10,
-  },
-  {
-    id: 2,
-    title: "Apple development",
-    status: "DRAFT",
-    visibility: "Public",
-    progress: 30,
-  },
-  {
-    id: 3,
-    title: "Learn to cook apple",
-    status: "DRAFT",
-    visibility: "Public",
-    progress: 5,
-  },
-  {
-    id: 4,
-    title: "Learn how to solve a Rubik's Cube",
-    status: "DRAFT",
-    visibility: "Public",
-    progress: 0,
-  },
-];
-
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+// import PublishCourse from "../../../backend/models/PublishCourse.js";
 
 function Courses() {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Tracks loading state
+  const [allCourses, setAllCourses] = useState([]);
+
+  const navigate = useNavigate(); // Initialize navigate function
+
+  const handleCourseClick = (courseId) => {
+    // Navigate to the course details page with the courseId
+    navigate(`/instructor/course/${courseId}/manage/basics`); // Adjust the URL based on your route configuration
+
+  };
+
+  const getCourses = async () => {
+    axios
+      .get("http://localhost:5000/instructor/courses")
+      .then(function (res) {
+        console.log(res.data);
+        setAllCourses(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
+    getCourses();
     const fetchUser = async () => {
       const data = await getUser();
       setUserData(data);
@@ -80,13 +73,15 @@ function Courses() {
           </div>
         </header>
 
-        <div className={styles.coursesList}>
-          {courses.map((course) => (
-            <div key={course.id} className={styles.courseCard}>
+        <div className={styles.coursesList} >
+          {allCourses.map((course) => (
+            <div key={course._id} className={styles.courseCard} onClick={() => handleCourseClick(course._id)}>
               <div className={styles.courseInfo}>
                 <div className={styles.courseIcon}>📘📄🎥</div>
                 <div className={styles.courseDetails}>
-                  <h3 className={styles.courseTitle}>{course.title}</h3>
+                  <h3 className={styles.courseTitle} onClick={() => handleCourseClick(course._id)}>
+                    {course.title}
+                  </h3>
                   <p className={styles.courseMeta}>
                     {course.status} <span className={styles.divider}>|</span>{" "}
                     {course.visibility}

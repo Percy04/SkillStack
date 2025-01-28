@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/pages/basics.module.css";
+import axios from "axios";
+import getUser from "../../utils/getUser.js";
 
 function Basics() {
+  const [userData, setUserData] = useState(null);
   const [formData, setFormData] = useState({
-    courseTitle: "",
-    courseSubtitle: "",
-    courseDescription: "",
+    title: "",
+    subtitle: "",
+    description: "",
     language: "en",
     level: "all",
     category: "teaching",
-    courseImageLink: "",
-    promotionalVideoLink: "",
+    course_image_url: "",
+    promo_video_url: "",
   });
 
   const handleInputChange = (e) => {
@@ -24,8 +27,28 @@ function Basics() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    // Add your submission logic here, e.g., API call
+
+    axios
+      .post("http://localhost:5000/instructor/course/manage/basics", {
+        formData,
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getUser();
+      setUserData(data);
+    };
+
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   return (
     <div className={styles.container}>
@@ -33,13 +56,13 @@ function Basics() {
       <form onSubmit={handleSubmit}>
         {/* Course Title */}
         <div className={styles.inputGroup}>
-          <label htmlFor="courseTitle">Course title</label>
+          <label htmlFor="title">Course title</label>
           <input
             type="text"
-            id="courseTitle"
+            id="title"
             placeholder="Insert your course title"
             maxLength="60"
-            value={formData.courseTitle}
+            value={formData.title}
             onChange={handleInputChange}
           />
           <small className={styles.helperText}>
@@ -50,13 +73,13 @@ function Basics() {
 
         {/* Course Subtitle */}
         <div className={styles.inputGroup}>
-          <label htmlFor="courseSubtitle">Course subtitle</label>
+          <label htmlFor="subtitle">Course subtitle</label>
           <input
             type="text"
-            id="courseSubtitle"
+            id="subtitle"
             placeholder="Insert your course subtitle"
             maxLength="120"
-            value={formData.courseSubtitle}
+            value={formData.subtitle}
             onChange={handleInputChange}
           />
           <small className={styles.helperText}>
@@ -67,12 +90,12 @@ function Basics() {
 
         {/* Course Description */}
         <div className={styles.inputGroup}>
-          <label htmlFor="courseDescription">Course description</label>
+          <label htmlFor="description">Course description</label>
           <textarea
-            id="courseDescription"
+            id="description"
             rows="5"
             placeholder="Insert your course description"
-            value={formData.courseDescription}
+            value={formData.description}
             onChange={handleInputChange}
           ></textarea>
           <small className={styles.helperText}>
@@ -115,24 +138,24 @@ function Basics() {
 
         {/* Course Image Link */}
         <div className={styles.inputGroup}>
-          <label htmlFor="courseImageLink">Course Image Link</label>
+          <label htmlFor="course_image_url">Course Image Link</label>
           <input
             type="text"
-            id="courseImageLink"
+            id="course_image_url"
             placeholder="Insert the link for your course image"
-            value={formData.courseImageLink}
+            value={formData.course_image_url}
             onChange={handleInputChange}
           />
         </div>
 
         {/* Promotional Video Link */}
         <div className={styles.inputGroup}>
-          <label htmlFor="promotionalVideoLink">Promotional Video Link</label>
+          <label htmlFor="promo_video_url">Promotional Video Link</label>
           <input
             type="text"
-            id="promotionalVideoLink"
+            id="promo_video_url"
             placeholder="Insert the link for your promotional video"
-            value={formData.promotionalVideoLink}
+            value={formData.promo_video_url}
             onChange={handleInputChange}
           />
         </div>
@@ -146,4 +169,3 @@ function Basics() {
 }
 
 export default Basics;
-

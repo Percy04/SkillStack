@@ -1,9 +1,6 @@
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 
-// const User = require('../models/User')
-// const jwt = require('jsonwebtoken')
-// const { UnauthenticatedError } = require('../errors')
 import {UnauthenticatedError} from "../errors/index.js";
 
 

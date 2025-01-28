@@ -117,7 +117,7 @@ app.get("/protected", authenticateUser, (req, res) => {
 });
 
 app.use("/auth", authRouter);
-app.use("/instructor", authenticateUser, instructorRouter);
+app.use("/instructor", instructorRouter);
 
 app.get("/logout", async (req, res, next) => {
   req.logout(function (err) {

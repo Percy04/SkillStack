@@ -38,15 +38,15 @@ function App() {
       element: <Dashboard />,
     },
     {
-      path: "/instructor/course/manage",
+      path: "/instructor/course/",
       element: <CourseLayout />,
       children: [
         {
-          path: "/instructor/course/manage/basics",
+          path: "/instructor/course/:courseId/manage/basics",
           element: <Basics />,
         },
         {
-          path: "/instructor/course/manage/pricing",
+          path: "/instructor/course/:courseId/manage/pricing",
           element: <Pricing />,
         },
       ],
