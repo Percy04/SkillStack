@@ -47,6 +47,8 @@ function Basics() {
       .catch(function (error) {
         console.log(error);
       });
+
+    axios.patch
   };
 
   useEffect(() => {

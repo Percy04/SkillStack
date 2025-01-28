@@ -4,17 +4,9 @@ import PlanCourse from "../models/PlanCourse.js";
 // import StatusCode from "http-status-codes";
 
 export const createPublishCourse = async (req, res, next) => {
-  const formData = req.body.formData;
-  const existingCourse = await PublishCourse.findOne({ title: formData.title });
-  if (existingCourse) {
-    res
-      .status()
-      .json({ message: "Course with this title exists with this title" });
-  }
-
   try {
-    const course = await PublishCourse.create(formData);
-    res.status(201).json({ course });
+    const course = await PublishCourse.create({title: ""});
+    res.status(201).json({courseId: course._id});
   } catch {
     console.log("Course couldn't be created");
     res.json({ message: "Course couldn't be created" });

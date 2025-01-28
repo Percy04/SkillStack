@@ -48,6 +48,22 @@ function Courses() {
     return <div></div>;
   }
 
+
+  const handleNewCourseClick = async () => {
+    //First create new course
+    try {
+      axios.post("http://localhost:5000/instructor/course")
+      .then(function (res) {
+        // console.log(res.data);
+        // console.log("Dawg");
+        const id = res.data.courseId;
+        navigate(`/instructor/course/${id}/manage/basics`);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <InstructorHeader name={userData.name}></InstructorHeader>
@@ -69,7 +85,7 @@ function Courses() {
               <option>Newest</option>
               <option>Oldest</option>
             </select>
-            <button className={styles.newCourseButton}>New course</button>
+            <button className={styles.newCourseButton} onClick={() => handleNewCourseClick()}>New course</button>
           </div>
         </header>
 
