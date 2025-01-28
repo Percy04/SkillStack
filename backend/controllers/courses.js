@@ -51,5 +51,21 @@ export const updatePublishCourse = async (req, res, next) => {
   } catch (error) {
     console.log("nahi hua: " + error);
   }
-  // res.send("Hi");
+};
+
+export const updatePaymentPublishCourse = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  const money = req.body.price;
+  console.log(money);
+  // const formData = req.body.formData;
+  // console.log("Req: ", req.body.formData);
+  try {
+    const courses = await PublishCourse.findByIdAndUpdate(
+      { _id: courseId },
+      {price: money}
+    );
+    res.status(201).json({ courses });
+  } catch (error) {
+    console.log("nahi hua: " + error);
+  } 
 };

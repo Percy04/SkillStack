@@ -16,20 +16,21 @@ function Basics() {
     promo_video_url: "",
   });
 
-  const courseId = (window.location.pathname).split("/")[3];
+  const courseId = window.location.pathname.split("/")[3];
 
   useEffect(() => {
-    const url = (window.location.pathname).split("/");
+    const url = window.location.pathname.split("/");
     // courseId = url[3];
-    axios.get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
-    .then(function (res) {
-      console.log(res.data);
+    axios
+      .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
+      .then(function (res) {
+        console.log(res.data);
         setFormData(res.data);
-    })
-    .catch(function (err) {
-      console.log(err);
-    })
-  }, [])
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -39,20 +40,22 @@ function Basics() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
 
-    axios
-      .post(`http://localhost:5000/instructor/course/${courseId}/manage/basics`, {
-        formData,
-      })
+    await axios
+      .post(
+        `http://localhost:5000/instructor/course/${courseId}/manage/basics`,
+        {
+          formData,
+        }
+      )
       .catch(function (error) {
         console.log(error);
       });
-
-    axios.patch
   };
+
 
   useEffect(() => {
     const fetchUser = async () => {

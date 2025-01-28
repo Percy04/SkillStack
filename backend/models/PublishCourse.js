@@ -36,7 +36,7 @@ const PublishCourseSchema = new mongoose.Schema({
         default: "",
         type: String
     },
-    pricing: {
+    price: {
         default: "",
         type: Number
     }

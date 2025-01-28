@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   const location = useLocation(); // To get the current path
   const urlParts = location.pathname.split("/");
-  console.log(location);
+  // console.log(location);
 
   const checkRoute = (sectionUrl) => {
     // console.log("Section href: " + sectionUrl);
@@ -35,7 +35,6 @@ const Sidebar = () => {
   const routing = (sectionUrl) => {
     const currUrl = (window.location.href).split('/');
     currUrl.pop();
-    
     currUrl.push(sectionUrl)
     const nextUrl = currUrl.join("/");
     return nextUrl;
