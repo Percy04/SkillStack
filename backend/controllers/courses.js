@@ -5,7 +5,7 @@ import PlanCourse from "../models/PlanCourse.js";
 
 export const createPublishCourse = async (req, res, next) => {
   const createdBy = req.body.userData.userId;
-  console.log(createdBy);
+  // console.log(createdBy);
   try {
     const course = await PublishCourse.create({ title: "", createdBy });
     res.status(201).json({ courseId: course._id });
@@ -34,7 +34,7 @@ export const PublishCourseDetails = async (req, res, next) => {
 export const getAllPublishCourses = async (req, res, next) => {
   const userId = req.query.userId;
   try {
-    const courses = await PublishCourse.find({createdBy: userId});
+    const courses = await PublishCourse.find({ createdBy: userId });
     // console.log("ID: " + courseId);
     res.status(201).json(courses);
   } catch (error) {
@@ -66,10 +66,22 @@ export const updatePaymentPublishCourse = async (req, res, next) => {
   try {
     const courses = await PublishCourse.findByIdAndUpdate(
       { _id: courseId },
-      {price: money}
+      { price: money }
     );
     res.status(201).json({ courses });
   } catch (error) {
     console.log("nahi hua: " + error);
-  } 
+  }
+};
+
+//PLAN COURSE
+export const updatePlanCourse = async (req, res, next) => {
+  console.log(req.body.formData);
+  try {
+    const course = await PlanCourse.create(req.body.formData);
+    res.status(201).json({ course });
+  } catch (error) {
+    console.log("DB couldn't make Plan Course: ", error);
+    res.json({ message: "Plan Course couldn't be created" });
+  }
 };

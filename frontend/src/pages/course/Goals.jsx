@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/pages/goals.module.css"
+import axios from "axios";
+import getUser from "../../utils/getUser.js";
 
 const Goals = () => {
+  const courseId = window.location.pathname.split("/")[3];
   const [learningObjectives, setLearningObjectives] = useState([
     "",
     "",
@@ -15,7 +18,7 @@ const Goals = () => {
     const updatedValues = [...formRow];
     updatedValues[index] = value;
     setter(updatedValues);
-    console.log(formRow);
+    // console.log(formRow);
   };
 
   const addMoreFields = (setter) => {
@@ -28,9 +31,31 @@ const Goals = () => {
       learningObjectives,
       requirements,
       targetAudience,
+      createdBy: userData.userId,
     };
     console.log("Submitted Data:", formData);
+    console.log(userData.userId);
+
+    axios.post(`http://localhost:5000/instructor/course/${courseId}/manage/goals`, {
+        formData
+    })
+    .catch(function (err) {
+        console.log("Goals submission to db error: " + err);
+    })
+
   };
+
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+        const data = await getUser();
+        setUserData(data);
+    }
+
+    fetchUser();
+  }, []);
+
+
 
   return (
     <div className={styles.container}>
@@ -58,7 +83,7 @@ const Goals = () => {
               maxLength="160"
               value={learningObjectives[index]}
               onChange={(e) => handleInputChange(index, e.target.value, setLearningObjectives, learningObjectives)}
-              required
+            //   required
             />
           ))}
           <button

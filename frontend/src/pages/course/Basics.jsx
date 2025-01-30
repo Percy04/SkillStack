@@ -32,23 +32,13 @@ function Basics() {
   }, []);
 
   useEffect(() => {
-
-    // if (isData === false) {
-    //   console.log("User data didnt load");
-    //   return;
-    // }
-
-    // if (hasFetchedData.current) return;
-    // hasFetchedData.current = true;
-
     const url = window.location.pathname.split("/");
-    // courseId = url[3];
     axios
       .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
       .then(function (res) {
-        console.log("Response: ", res.data);
+        // console.log("Response: ", res.data);
         setFormData(res.data);
-        console.log("userData", data);
+        // console.log("userData", data);
         // setFormData((prevData) => ({...res.data, createdBy: userData.userId}));
       })
       .catch(function (err) {
