@@ -20,9 +20,14 @@ function Courses() {
 
   };
 
-  const getCourses = async () => {
+  const getCourses = async (data) => {
+    // console.log(data);
     axios
-      .get("http://localhost:5000/instructor/courses")
+      .get("http://localhost:5000/instructor/courses", {
+        params: {
+          userId: data.userId
+        }
+      })
       .then(function (res) {
         console.log(res.data);
         setAllCourses(res.data);
@@ -33,15 +38,21 @@ function Courses() {
   };
 
   useEffect(() => {
-    getCourses();
+    let data;
     const fetchUser = async () => {
-      const data = await getUser();
+      data = await getUser();
       setUserData(data);
       setIsLoading(false); // Stop loading once data is fetched
     };
 
     fetchUser();
+    // getCourses(data);
   }, []);
+
+  useEffect(() => {
+    if (userData)
+      getCourses(userData);
+  }, [userData])
 
   if (isLoading || !userData) {
     // Render loading or fallback state
@@ -50,8 +61,11 @@ function Courses() {
 
 
   const handleNewCourseClick = async () => {
+    // console.log(userData);
     try {
-      axios.post("http://localhost:5000/instructor/course")
+      axios.post("http://localhost:5000/instructor/course", {
+        userData
+      })
       .then(function (res) {
         const id = res.data.courseId;
         navigate(`/instructor/course/${id}/manage/basics`);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "../../styles/pages/basics.module.css";
 import axios from "axios";
 import getUser from "../../utils/getUser.js";
@@ -14,23 +14,47 @@ function Basics() {
     category: "teaching",
     course_image_url: "",
     promo_video_url: "",
+    createdBy: "",
   });
 
   const courseId = window.location.pathname.split("/")[3];
+  const hasFetchedData = useRef(false);
+  let data;
+  let isData = false;
 
   useEffect(() => {
+    const fetchUser = async () => {
+      data = await getUser();
+      isData = true;
+      // setUserData(data);
+    };
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+
+    // if (isData === false) {
+    //   console.log("User data didnt load");
+    //   return;
+    // }
+
+    // if (hasFetchedData.current) return;
+    // hasFetchedData.current = true;
+
     const url = window.location.pathname.split("/");
     // courseId = url[3];
     axios
       .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
       .then(function (res) {
-        console.log(res.data);
+        console.log("Response: ", res.data);
         setFormData(res.data);
+        console.log("userData", data);
+        // setFormData((prevData) => ({...res.data, createdBy: userData.userId}));
       })
       .catch(function (err) {
         console.log(err);
       });
-  }, []);
+  }, [data]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -55,16 +79,6 @@ function Basics() {
         console.log(error);
       });
   };
-
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const data = await getUser();
-      setUserData(data);
-    };
-
-    fetchUser();
-  }, []);
 
   return (
     <div className={styles.container}>
