@@ -14,6 +14,8 @@ import Courses from "./pages/Courses.jsx";
 import CourseLayout from "./components/layout/CourseLayout.jsx";
 import Basics from "./pages/course/Basics.jsx";
 import Pricing from "./pages/course/Pricing.jsx";
+import Goals from "./pages/course/Goals.jsx";
+import Messages from "./pages/course/Messages.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -48,6 +50,18 @@ function App() {
         {
           path: "/instructor/course/:courseId/manage/pricing",
           element: <Pricing />,
+        },
+        {
+          path: "/instructor/course/:courseId/manage/goals",
+          element: <Goals />,
+        },
+        {
+          path: "/instructor/course/:courseId/manage/pricing",
+          element: <Pricing />,
+        },
+        {
+          path: "/instructor/course/:courseId/manage/messages",
+          element: <Messages />
         },
       ],
     },

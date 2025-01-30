@@ -1,0 +1,139 @@
+import React, { useState } from "react";
+import styles from "../../styles/pages/goals.module.css"
+
+const Goals = () => {
+  const [learningObjectives, setLearningObjectives] = useState([
+    "",
+    "",
+    "",
+    "",
+  ]);
+  const [requirements, setRequirements] = useState([""]);
+  const [targetAudience, setTargetAudience] = useState([""]);
+
+  const handleInputChange = (index, value, setter, formRow) => {
+    const updatedValues = [...formRow];
+    updatedValues[index] = value;
+    setter(updatedValues);
+    console.log(formRow);
+  };
+
+  const addMoreFields = (setter) => {
+    setter((prev) => [...prev, ""]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      learningObjectives,
+      requirements,
+      targetAudience,
+    };
+    console.log("Submitted Data:", formData);
+  };
+
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.title}>Intended learners</h2>
+      <p className={styles.description}>
+        The following descriptions will be publicly visible on your
+        Course Landing Page and will have a direct impact on your course performance.
+      </p>
+
+      <form onSubmit={handleSubmit}>
+        {/* Learning Objectives */}
+        <div className={styles.section}>
+          <label className={styles.label}>
+            What will students learn in your course?
+          </label>
+          <p className={styles.helperText}>
+            You must enter at least <b>4 learning objectives</b> or outcomes.
+          </p>
+          {learningObjectives.map((objective, index) => (
+            <input
+              key={index}
+              type="text"
+              placeholder="Example: Define the roles and responsibilities of a project manager"
+              className={styles.input}
+              maxLength="160"
+              value={learningObjectives[index]}
+              onChange={(e) => handleInputChange(index, e.target.value, setLearningObjectives, learningObjectives)}
+              required
+            />
+          ))}
+          <button
+            type="button"
+            className={styles.addMore}
+            onClick={() => addMoreFields(setLearningObjectives)}
+          >
+            + Add more to your response
+          </button>
+        </div>
+
+        {/* Requirements */}
+        <div className={styles.section}>
+          <label className={styles.label}>
+            What are the requirements or prerequisites for taking your course?
+          </label>
+          <p className={styles.helperText}>
+            List any skills, experience, or tools required before taking this course.
+          </p>
+          {requirements.map((requirement, index) => (
+            <input
+              key={index}
+              type="text"
+              placeholder="Example: No programming experience needed. You will learn everything you need to know"
+              className={styles.input}
+              maxLength="160"
+              value={requirement}
+              onChange={(e) => handleInputChange(index, e.target.value, setRequirements, requirements)}
+              required
+            />
+          ))}
+          <button
+            type="button"
+            className={styles.addMore}
+            onClick={() => addMoreFields(setRequirements)}
+          >
+            + Add more to your response
+          </button>
+        </div>
+
+        {/* Target Audience */}
+        <div className={styles.section}>
+          <label className={styles.label}>
+            Who is this course for?
+          </label>
+          <p className={styles.helperText}>
+            Describe the <a href="#" className={styles.link}>intended learners</a> who will find your course valuable.
+          </p>
+          {targetAudience.map((audience, index) => (
+            <input
+              key={index}
+              type="text"
+              placeholder="Example: Beginner Python developers curious about data science"
+              className={styles.input}
+              maxLength="160"
+              value={audience}
+              onChange={(e) => handleInputChange(index, e.target.value, setTargetAudience, targetAudience)}
+              required
+            />
+          ))}
+          <button
+            type="button"
+            className={styles.addMore}
+            onClick={() => addMoreFields(setTargetAudience)}
+          >
+            + Add more to your response
+          </button>
+        </div>
+
+        <button type="submit" className={styles.submitButton}>
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Goals;
