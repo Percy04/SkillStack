@@ -32,7 +32,6 @@ function Basics() {
   }, []);
 
   useEffect(() => {
-    const url = window.location.pathname.split("/");
     axios
       .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
       .then(function (res) {

@@ -85,3 +85,20 @@ export const updatePlanCourse = async (req, res, next) => {
     res.json({ message: "Plan Course couldn't be created" });
   }
 };
+
+export const getPlanCourse = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  const userId = req.query.userId;
+  console.log("query: ", req.query);
+  console.log("CourseID: " + courseId);
+  try {
+    const formData = await PlanCourse.findOne({
+      createdBy: userId,
+      publishCourseId: courseId,
+    });
+    res.status(201).json(formData);
+  } catch (error) {
+    console.log("getPlanCourse, ", error);
+    res.json({ message: "Error getting back plan course data" });
+  }
+};
