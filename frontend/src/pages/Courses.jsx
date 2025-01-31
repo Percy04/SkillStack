@@ -4,8 +4,10 @@ import InstructorHeader from "../components/Instructorheader";
 import { useState, useEffect } from "react";
 import getUser from "../utils/getUser";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import PublishCourse from "../../../backend/models/PublishCourse.js";
+// import {randomBytes} from "crypto";
+import crypto from "crypto";
 
 function Courses() {
   const [userData, setUserData] = useState(null);
@@ -17,7 +19,6 @@ function Courses() {
   const handleCourseClick = (courseId) => {
     // Navigate to the course details page with the courseId
     navigate(`/instructor/course/${courseId}/manage/basics`); // Adjust the URL based on your route configuration
-
   };
 
   const getCourses = async (data) => {
@@ -25,8 +26,8 @@ function Courses() {
     axios
       .get("http://localhost:5000/instructor/courses", {
         params: {
-          userId: data.userId
-        }
+          userId: data.userId,
+        },
       })
       .then(function (res) {
         console.log(res.data);
@@ -50,35 +51,78 @@ function Courses() {
   }, []);
 
   useEffect(() => {
-    if (userData)
-      getCourses(userData);
-  }, [userData])
+    if (userData) getCourses(userData);
+  }, [userData]);
 
   if (isLoading || !userData) {
     // Render loading or fallback state
     return <div></div>;
   }
 
-  let ursl = [
+  let urls = [
     "http://localhost:5000/instructor/publishcourse",
     "http://localhost:5000/instructor/plancourse",
     // "http://localhost:5000/instructor/createcourse",
-  ]
+  ];
 
   const handleNewCourseClick = async () => {
     // console.log(userData);
-    try {
-      axios.post("http://localhost:5000/instructor/course", {
-        userData
-      })
-      .then(function (res) {
-        const id = res.data.courseId;
-        navigate(`/instructor/course/${id}/manage/basics`);
-      })
-    } catch (error) {
-      console.log(error);
+    //   try {
+    //     axios.post("http://localhost:5000/instructor/course", {
+    //       userData
+    //     })
+    //     .then(function (res) {
+    //       const id = res.data.courseId;
+    //       navigate(`/instructor/course/${id}/manage/basics`);
+    //     })
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+
+    if (!userData) return;
+
+    //Create a hash to use as index for finding all the different collections belonging to one course
+    async function generateShortHash() {
+      const timestamp = new TextEncoder().encode(Date.now().toString());
+      const hashBuffer = await window.crypto.subtle.digest(
+        "SHA-256",
+        timestamp
+      );
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+      return hashArray
+        .slice(0, 8) // Take the first 8 bytes (16 hex chars)
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
     }
-  }
+
+    var index = await generateShortHash();
+    console.log(index);
+
+    const createCourseData = {
+      ...userData,
+      index
+    }
+
+    console.log(createCourseData);
+
+  const requests = urls.map((url) => 
+    axios.get(url, { params: createCourseData })
+  );
+
+    axios.all(requests)
+    .then((responses) => {
+      console.log(responses);
+      // responses.forEach((res) => {
+      //   const id = res.data.courseId;
+      //   console.log("Data: " , res.data);
+      // })
+      navigate(`/instructor/course/${index}/manage/basics`);
+    })
+    .catch((err) => {
+      console.log("Error in creating all courses, " , err);
+    })
+  };
 
   return (
     <>
@@ -101,17 +145,29 @@ function Courses() {
               <option>Newest</option>
               <option>Oldest</option>
             </select>
-            <button className={styles.newCourseButton} onClick={() => handleNewCourseClick()}>New course</button>
+            <button
+              className={styles.newCourseButton}
+              onClick={() => handleNewCourseClick()}
+            >
+              New course
+            </button>
           </div>
         </header>
 
-        <div className={styles.coursesList} >
+        <div className={styles.coursesList}>
           {allCourses.map((course) => (
-            <div key={course._id} className={styles.courseCard} onClick={() => handleCourseClick(course._id)}>
+            <div
+              key={course._id}
+              className={styles.courseCard}
+              onClick={() => handleCourseClick(course.index)}
+            >
               <div className={styles.courseInfo}>
                 <div className={styles.courseIcon}>📘📄🎥</div>
                 <div className={styles.courseDetails}>
-                  <h3 className={styles.courseTitle} onClick={() => handleCourseClick(course._id)}>
+                  <h3
+                    className={styles.courseTitle}
+                    onClick={() => handleCourseClick(course.index)}
+                  >
                     {course.title}
                   </h3>
                   <p className={styles.courseMeta}>

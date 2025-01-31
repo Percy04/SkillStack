@@ -3,7 +3,7 @@ import axios from "axios";
 import styles from "../../styles/pages/pricing.module.css";
 
 function Pricing() {
-  const [price, setPrice] = useState(""); 
+  const [price, setPrice] = useState(0);
   const courseId = window.location.pathname.split("/")[3];
 
   useEffect(() => {
@@ -11,15 +11,16 @@ function Pricing() {
       .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
       .then((res) => {
         console.log(res.data);
-        setPrice(res.data.price); 
+        const oldPrice = res.data.price || 0;
+        setPrice(oldPrice);
       })
       .catch((err) => {
         console.error("Error fetching course data:", err);
       });
-  }, []); 
+  }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     console.log("Submitting price:", price);
 
     try {
@@ -35,7 +36,7 @@ function Pricing() {
 
   const handleChange = (e) => {
     console.log("Selected price:", e.target.value);
-    setPrice(e.target.value); 
+    setPrice(e.target.value);
   };
 
   return (

@@ -32,7 +32,7 @@ const Goals = () => {
       requirements,
       targetAudience,
       createdBy: userData.userId,
-      publishCourseId: courseId,
+      index: courseId,
     };
     // console.log("Submitted Data:", formData);
     console.log(userData.userId);

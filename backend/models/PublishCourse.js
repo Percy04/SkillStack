@@ -45,6 +45,10 @@ const PublishCourseSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "Please provide user"],
   },
+  index: {
+    type: String,
+    required: [true, "Please provide common index for all collections"],
+  }
 }, {timestamps:true});
 
 export default mongoose.model("PublishCourse", PublishCourseSchema);

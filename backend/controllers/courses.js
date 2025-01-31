@@ -4,21 +4,23 @@ import PlanCourse from "../models/PlanCourse.js";
 // import StatusCode from "http-status-codes";
 
 export const createPublishCourse = async (req, res, next) => {
-  const createdBy = req.body.userData.userId;
-  // console.log(createdBy);
+  const createdBy = req.query.userId;
+  const index = req.query.index;
+  // console.log("createdby + index: " + createdBy + " " + index);
   try {
-    const course = await PublishCourse.create({ title: "", createdBy });
-    res.status(201).json({ courseId: course._id });
-  } catch {
-    console.log("Course couldn't be created");
-    res.json({ message: "Course couldn't be created" });
+    const publishCourse = await PublishCourse.create({ createdBy, index });
+    res.status(201).json({ publishCourse });
+  } catch (error) {
+    console.log("DB couldn't make Plan Course: ", error);
+    res.json({ message: "Plan Course couldn't be created" });
   }
 };
 
 export const PublishCourseDetails = async (req, res, next) => {
   const courseId = req.params.courseId;
+  // console.log("hi: " + courseId);
   try {
-    const course = await PublishCourse.findById(courseId);
+    const course = await PublishCourse.findOne({index: courseId});
     if (!course) {
       res.status(401).json({ message: "Course not created/doesn't exist" });
     } else {
@@ -45,10 +47,10 @@ export const getAllPublishCourses = async (req, res, next) => {
 export const updatePublishCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
   const formData = req.body.formData;
-  console.log("Req: ", req.body.formData);
+  // console.log("Req: ", req.body.formData);
   try {
     const courses = await PublishCourse.findOneAndReplace(
-      { _id: courseId },
+      { index: courseId },
       formData
     );
     res.status(201).json({ courses });
@@ -60,12 +62,12 @@ export const updatePublishCourse = async (req, res, next) => {
 export const updatePaymentPublishCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
   const money = req.body.price;
-  console.log(money);
+  // console.log(money);
   // const formData = req.body.formData;
   // console.log("Req: ", req.body.formData);
   try {
-    const courses = await PublishCourse.findByIdAndUpdate(
-      { _id: courseId },
+    const courses = await PublishCourse.findOneAndUpdate(
+      { index: courseId },
       { price: money }
     );
     res.status(201).json({ courses });
@@ -75,10 +77,26 @@ export const updatePaymentPublishCourse = async (req, res, next) => {
 };
 
 //PLAN COURSE
-export const updatePlanCourse = async (req, res, next) => {
-  console.log(req.body.formData);
+export const createPlanCourse = async (req, res, next) => {
+  const createdBy = req.query.userId;
+  const courseId = req.query.index;
+  // console.log('hi');
   try {
-    const course = await PlanCourse.create(req.body.formData);
+    const course = await PlanCourse.create({ createdBy, index: courseId });
+    res.status(201).json({ course });
+  } catch (error) {
+    console.log("DB couldn't make Plan Course: ", error);
+    res.json({ message: "Plan Course couldn't be created" });
+  }
+};
+
+export const updatePlanCourse = async (req, res, next) => {
+  // console.log("PLAN: " , req.body.formData);
+  // console.log("INDEX: " + req.params.courseId);
+
+  try {
+    // const course = await PlanCourse.create(req.body.formData);
+    const course = await PlanCourse.findOneAndReplace({createdBy: req.body.formData.createdBy, index: req.params.courseId}, req.body.formData);
     res.status(201).json({ course });
   } catch (error) {
     console.log("DB couldn't make Plan Course: ", error);
@@ -89,12 +107,12 @@ export const updatePlanCourse = async (req, res, next) => {
 export const getPlanCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
   const userId = req.query.userId;
-  console.log("query: ", req.query);
-  console.log("CourseID: " + courseId);
+  // console.log("query: ", req.query);
+  // console.log("CourseID: " + courseId);
   try {
     const formData = await PlanCourse.findOne({
       createdBy: userId,
-      publishCourseId: courseId,
+      index: courseId,
     });
     res.status(201).json(formData);
   } catch (error) {
