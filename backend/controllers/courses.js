@@ -16,11 +16,13 @@ export const createPublishCourse = async (req, res, next) => {
   }
 };
 
+
 export const PublishCourseDetails = async (req, res, next) => {
   const courseId = req.params.courseId;
-  // console.log("hi: " + courseId);
+  const userId = req.query.userId;
+  console.log("hi: " , req.query.userId);
   try {
-    const course = await PublishCourse.findOne({ index: courseId });
+    const course = await PublishCourse.findOne({ index: courseId, createdBy: userId});
     if (!course) {
       res.status(401).json({ message: "Course not created/doesn't exist" });
     } else {

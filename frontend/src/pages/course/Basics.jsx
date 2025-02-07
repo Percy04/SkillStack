@@ -25,25 +25,36 @@ function Basics() {
   useEffect(() => {
     const fetchUser = async () => {
       data = await getUser();
+      setUserData(data);
       isData = true;
-      // setUserData(data);
     };
     fetchUser();
   }, []);
 
   useEffect(() => {
+    if (!userData) return;
+
+    console.log("DATA: " , userData);
+
     axios
-      .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
+      .get(
+        `http://localhost:5000/instructor/course/${courseId}/manage/basics`,
+        {
+          params: {
+            userId: userData.userId,
+          }
+        }
+      )
       .then(function (res) {
-        console.log("Response: ", res.data);
+        // console.log("Response: ", res.data);
         setFormData(res.data);
-        console.log("userData", data);
+        // console.log("userData", data);
         // setFormData((prevData) => ({...res.data, createdBy: userData.userId}));
       })
       .catch(function (err) {
         console.log("OHNO can't get publish course form data: " + err);
       });
-  }, [data]);
+  }, [userData]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;

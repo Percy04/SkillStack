@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../../styles/pages/pricing.module.css";
+import getUser from "../../utils/getUser";
+
 
 function Pricing() {
   const [price, setPrice] = useState(0);
   const courseId = window.location.pathname.split("/")[3];
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    const fetchUser = async () => {
+      let data = await getUser();
+      setUserData(data);
+    };
+    fetchUser();
+  }, []);
+
+
+  useEffect(() => {
+    if (!userData) return;
+
     axios
-      .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
+      .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`, {
+        params: {
+          userId: userData.userId,
+        }
+      })
       .then((res) => {
         // console.log(res.data);
         const oldPrice = res.data.price || 0;
@@ -17,7 +35,7 @@ function Pricing() {
       .catch((err) => {
         console.error("Error fetching course data:", err);
       });
-  }, []);
+  }, [userData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
