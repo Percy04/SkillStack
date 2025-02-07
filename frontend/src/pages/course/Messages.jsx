@@ -20,6 +20,19 @@ const Messages = () => {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
+      .then((res) => {
+        console.log("data: " , res.data);
+        setWelcomeMessage(res.data.welcome_message);
+        setCongratsMessage(res.data.congratulations_message);
+      })
+      .catch((err) => {
+        console.error("Error fetching course data:", err);
+      });
+  }, []);
+
 
   const handleSaveButton = async (e) => {
     e.preventDefault();
