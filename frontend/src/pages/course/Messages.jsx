@@ -1,11 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/pages/messages.module.css";
+import axios from "axios";
+import getUser from "../../utils/getUser";
 
 const Messages = () => {
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [congratsMessage, setCongratsMessage] = useState("");
+  const [userData, setUserData] = useState(null);
 
   const charLimit = 1000;
+  const courseId = window.location.pathname.split("/")[3];
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getUser();
+      // isData = true;
+      setUserData(data);
+    };
+    fetchUser();
+  }, []);
+
+
+  const handleSaveButton = async (e) => {
+    e.preventDefault();
+
+     const messages = {
+      welcomeMessage,
+      congratsMessage,
+      userId: userData.userId
+     }
+    // console.log("Submitting price:", price);
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/instructor/course/${courseId}/manage/messages`,
+        { messages }
+      );
+      console.log("userData" , userData);
+
+      console.log("Message response: " , response.data);
+      // console.log("Price updated successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating price:", error);
+    }
+  }
+
+
 
   return (
     <div className={styles.container}>
@@ -51,6 +91,10 @@ const Messages = () => {
           )}
         </div>
       </div>
+
+      <button onClick={(e) => handleSaveButton(e)}>
+        Save
+      </button>
     </div>
   );
 };

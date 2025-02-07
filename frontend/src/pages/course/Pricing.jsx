@@ -10,7 +10,7 @@ function Pricing() {
     axios
       .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const oldPrice = res.data.price || 0;
         setPrice(oldPrice);
       })
@@ -21,21 +21,21 @@ function Pricing() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting price:", price);
+    // console.log("Submitting price:", price);
 
     try {
       const response = await axios.patch(
         `http://localhost:5000/instructor/course/${courseId}/manage/pricing`,
         { price }
       );
-      console.log("Price updated successfully:", response.data);
+      // console.log("Price updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating price:", error);
     }
   };
 
   const handleChange = (e) => {
-    console.log("Selected price:", e.target.value);
+    // console.log("Selected price:", e.target.value);
     setPrice(e.target.value);
   };
 

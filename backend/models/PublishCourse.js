@@ -48,6 +48,14 @@ const PublishCourseSchema = new mongoose.Schema({
   index: {
     type: String,
     required: [true, "Please provide common index for all collections"],
+  },
+  welcome_message: {
+    type: String,
+    default: ""
+  },
+  congratulations_message: {
+    type: String,
+    default: ""
   }
 }, {timestamps:true});
 

@@ -20,7 +20,7 @@ export const PublishCourseDetails = async (req, res, next) => {
   const courseId = req.params.courseId;
   // console.log("hi: " + courseId);
   try {
-    const course = await PublishCourse.findOne({index: courseId});
+    const course = await PublishCourse.findOne({ index: courseId });
     if (!course) {
       res.status(401).json({ message: "Course not created/doesn't exist" });
     } else {
@@ -96,7 +96,10 @@ export const updatePlanCourse = async (req, res, next) => {
 
   try {
     // const course = await PlanCourse.create(req.body.formData);
-    const course = await PlanCourse.findOneAndReplace({createdBy: req.body.formData.createdBy, index: req.params.courseId}, req.body.formData);
+    const course = await PlanCourse.findOneAndReplace(
+      { createdBy: req.body.formData.createdBy, index: req.params.courseId },
+      req.body.formData
+    );
     res.status(201).json({ course });
   } catch (error) {
     console.log("DB couldn't make Plan Course: ", error);
@@ -118,5 +121,27 @@ export const getPlanCourse = async (req, res, next) => {
   } catch (error) {
     console.log("getPlanCourse, ", error);
     res.json({ message: "Error getting back plan course data" });
+  }
+};
+
+//MESSAGES
+export const updateMessagesPublishCourse = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  const userId = req.body.messages.userId;
+  console.log("message: " , req.body.messages);
+  console.log("userId: " + userId);
+  const welcome = req.body.messages.welcomeMessage;
+  const congrats = req.body.messages.congratsMessage;
+
+  // res.send("Hi");
+  try {
+    const courses = await PublishCourse.findOneAndUpdate(
+      { index: courseId, createdBy: userId },
+      {welcome_message: welcome, congratulations_message: congrats}, {new: true}
+    );
+    res.status(201).json({ courses });
+  } catch (error) {
+    console.log("nahi hua: " + error);
+    res.status(500).json({ message: "Error in updating message." });
   }
 };
