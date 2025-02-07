@@ -14,34 +14,41 @@ const Messages = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const data = await getUser();
-      // isData = true;
       setUserData(data);
     };
     fetchUser();
   }, []);
 
   useEffect(() => {
+    if (!userData) return;
+
     axios
-      .get(`http://localhost:5000/instructor/course/${courseId}/manage/basics`)
+      .get(
+        `http://localhost:5000/instructor/course/${courseId}/manage/basics`,
+        {
+          params: {
+            userId: userData.userId,
+          },
+        }
+      )
       .then((res) => {
-        console.log("data: " , res.data);
+        console.log("data: ", res.data);
         setWelcomeMessage(res.data.welcome_message);
         setCongratsMessage(res.data.congratulations_message);
       })
       .catch((err) => {
         console.error("Error fetching course data:", err);
       });
-  }, []);
-
+  }, [userData]);
 
   const handleSaveButton = async (e) => {
     e.preventDefault();
 
-     const messages = {
+    const messages = {
       welcomeMessage,
       congratsMessage,
-      userId: userData.userId
-     }
+      userId: userData.userId,
+    };
     // console.log("Submitting price:", price);
 
     try {
@@ -49,22 +56,23 @@ const Messages = () => {
         `http://localhost:5000/instructor/course/${courseId}/manage/messages`,
         { messages }
       );
-      console.log("userData" , userData);
+      console.log("userData", userData);
 
-      console.log("Message response: " , response.data);
+      console.log("Message response: ", response.data);
       // console.log("Price updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating price:", error);
     }
-  }
-
-
+  };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Course messages</h2>
       <p className={styles.description}>
-        Write messages to your students (optional) that will be sent automatically when they join or complete your course to encourage students to engage with course content. If you do not wish to send a welcome or congratulations message, leave the text box blank.
+        Write messages to your students (optional) that will be sent
+        automatically when they join or complete your course to encourage
+        students to engage with course content. If you do not wish to send a
+        welcome or congratulations message, leave the text box blank.
       </p>
 
       {/* Welcome Message */}
@@ -79,9 +87,13 @@ const Messages = () => {
         />
         <div className={styles.charCounter}>
           {welcomeMessage.length > charLimit ? (
-            <span className={styles.error}>{welcomeMessage.length} / {charLimit}</span>
+            <span className={styles.error}>
+              {welcomeMessage.length} / {charLimit}
+            </span>
           ) : (
-            <span>{welcomeMessage.length} / {charLimit}</span>
+            <span>
+              {welcomeMessage.length} / {charLimit}
+            </span>
           )}
         </div>
       </div>
@@ -98,16 +110,18 @@ const Messages = () => {
         />
         <div className={styles.charCounter}>
           {congratsMessage.length > charLimit ? (
-            <span className={styles.error}>{congratsMessage.length} / {charLimit}</span>
+            <span className={styles.error}>
+              {congratsMessage.length} / {charLimit}
+            </span>
           ) : (
-            <span>{congratsMessage.length} / {charLimit}</span>
+            <span>
+              {congratsMessage.length} / {charLimit}
+            </span>
           )}
         </div>
       </div>
 
-      <button onClick={(e) => handleSaveButton(e)}>
-        Save
-      </button>
+      <button onClick={(e) => handleSaveButton(e)}>Save</button>
     </div>
   );
 };

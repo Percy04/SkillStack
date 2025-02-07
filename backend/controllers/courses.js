@@ -78,6 +78,9 @@ export const updatePaymentPublishCourse = async (req, res, next) => {
   }
 };
 
+
+
+
 //PLAN COURSE
 export const createPlanCourse = async (req, res, next) => {
   const createdBy = req.query.userId;

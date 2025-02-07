@@ -16,6 +16,7 @@ import Basics from "./pages/course/Basics.jsx";
 import Pricing from "./pages/course/Pricing.jsx";
 import Goals from "./pages/course/Goals.jsx";
 import Messages from "./pages/course/Messages.jsx";
+import Curriculum from "./pages/course/Curriculum.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -63,6 +64,10 @@ function App() {
           path: "/instructor/course/:courseId/manage/messages",
           element: <Messages />
         },
+        {
+          path: "/instructor/course/:courseId/manage/curriculum",
+          element: <Curriculum />
+        }
       ],
     },
   ]);
