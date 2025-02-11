@@ -16,23 +16,39 @@ const Curriculum = () => {
           content: "",
           visible: false,
         },
-        {
-          id: 2,
-          title: "Make an Apple",
-          type: null,
-          content: "",
-          visible: false,
-        },
       ],
     },
   ]);
 
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [initialSections, setInitialSections] = useState(sections);
+
+  useEffect(() => {
+    const isSame = JSON.stringify(sections) === JSON.stringify(initialSections);
+    setIsDisabled(isSame);
+  }, [sections, initialSections]);
+
+  const handleSave = () => {
+    setIsDisabled(true);
+    setInitialSections(sections);
+    console.log("Saved!", sections);
+  };
+
   const handleAddSection = () => {
+    const lastSection = sections[sections.length - 1];
+
+    // Prevent adding a new section if the last one has no lectures
+    if (!lastSection || lastSection.lectures.length === 0) {
+      alert("You must add at least one lecture before creating a new section.");
+      return;
+    }
+
     const newSection = {
       id: Date.now(),
       title: "New Section",
       lectures: [],
     };
+
     setSections([...sections, newSection]);
   };
 
@@ -102,30 +118,7 @@ const Curriculum = () => {
     );
   };
 
-  const handleToggleContentType = (sectionId, lectureId, type, event) => {
-    // console.log(event.target.nextSibling)
-    // console.log(event.target.prevSibling)
-    // console.log(event.target);
-
-    // setSections(
-    //   sections.map((section) => {
-    //     section.id === sectionId
-    //       ? {
-    //           ...section,
-    //           lectures: section.lectures.map((lecture) => {
-    //             lecture.id === lectureId
-    //               ? {
-    //                   ...lecture,
-    //                   type: lecture.type,
-    //                 }
-    //               : lecture;
-    //           }),
-    //         }
-    //       : section;
-    //   })
-    // );
-
-    console.log(type);
+  const handleToggleContentType = (sectionId, lectureId, type) => {
     setSections(
       sections.map((section) =>
         section.id === sectionId
@@ -135,10 +128,9 @@ const Curriculum = () => {
                 lecture.id === lectureId
                   ? {
                       ...lecture,
-                      // type: lecture.type === type ? null : type,
                       type,
                       visible: lecture.type !== type || !lecture.visible,
-                      // content: lecture.type === type ? "" : lecture.content,
+                      content: lecture.type === null ? "" : lecture.content,
                     }
                   : lecture
               ),
@@ -149,7 +141,6 @@ const Curriculum = () => {
   };
 
   const handleUpdateContent = (sectionId, lectureId, content) => {
-    // console.log("Content: " + content);
     setSections(
       sections.map((section) =>
         section.id === sectionId
@@ -162,54 +153,33 @@ const Curriculum = () => {
           : section
       )
     );
-    // console.log(sections);
   };
 
-  const handleSaveLectureContent = () => {};
-
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [initialSections, setInitialSections] = useState(sections);
-
-  useEffect(() => {
-    const isSame = JSON.stringify(sections) === JSON.stringify(initialSections);
-    setIsDisabled(isSame);
-  }, [sections, initialSections]);
-
-  const handleSave = () => {
-    setIsDisabled(true);
-    setInitialSections(sections);
-    console.log("Saved!", sections);
+  const handleSaveLectureContent = () => {
+    console.log("Lecture content saved!");
   };
 
   useEffect(() => {
     console.log(sections);
-  }, [sections]);
+  }, [sections])
 
   return (
     <div className={styles.curriculum}>
       <div className={styles.header}>
         <h2 className={styles.heading}>Curriculum</h2>
-        <button
-          type="button"
-          disabled={isDisabled}
-          onClick={() => handleSave()}
-        >
+        <button type="button" disabled={isDisabled} onClick={handleSave}>
           Save
         </button>
       </div>
+
       {sections.map((section) => (
         <div key={section.id} className={styles.section}>
           <input
             className={styles.sectionTitle}
             value={section.title}
-            onChange={(e) =>
-              handleUpdateSectionTitle(section.id, e.target.value)
-            }
+            onChange={(e) => handleUpdateSectionTitle(section.id, e.target.value)}
           />
-          <button
-            className={styles.deleteBtn}
-            onClick={() => handleDeleteSection(section.id)}
-          >
+          <button className={styles.deleteBtn} onClick={() => handleDeleteSection(section.id)}>
             🗑️
           </button>
 
@@ -218,53 +188,26 @@ const Curriculum = () => {
               <input
                 className={styles.lectureTitle}
                 value={lecture.title}
-                onChange={(e) =>
-                  handleUpdateLectureTitle(
-                    section.id,
-                    lecture.id,
-                    e.target.value
-                  )
-                }
+                onChange={(e) => handleUpdateLectureTitle(section.id, lecture.id, e.target.value)}
               />
 
               <button
-                className={`${styles.contentBtn} 
-                ${lecture.type === "video" ? styles.hide : ""}`}
-                onClick={(e) =>
-                  handleToggleContentType(section.id, lecture.id, "article", e)
-                }
+                className={`${styles.contentBtn} ${lecture.type === "video" ? styles.hide : ""}`}
+                onClick={() => handleToggleContentType(section.id, lecture.id, "article")}
               >
                 Article
               </button>
 
               <button
-                className={`${styles.contentBtn} 
-                ${lecture.type === "article" ? styles.hide : ""}`}
-                onClick={(e) =>
-                  handleToggleContentType(section.id, lecture.id, "video", e)
-                }
+                className={`${styles.contentBtn} ${lecture.type === "article" ? styles.hide : ""}`}
+                onClick={() => handleToggleContentType(section.id, lecture.id, "video")}
               >
                 Video
               </button>
 
-              <button
-                className={styles.deleteBtn}
-                onClick={() => handleDeleteLecture(section.id, lecture.id)}
-              >
+              <button className={styles.deleteBtn} onClick={() => handleDeleteLecture(section.id, lecture.id)}>
                 🗑️
               </button>
-
-              {/* 
-              {lecture.visible && lecture.type === "article" && (
-                // I don't simply get text here, I get HTML.
-                <ReactQuill
-                  theme="snow"
-                  value={lecture.content}
-                  onChange={(e) =>
-                    handleUpdateContent(section.id, lecture.id, e)
-                  }
-                />
-              )} */}
 
               {lecture.visible && lecture.type === "article" && (
                 <div>
@@ -272,20 +215,14 @@ const Curriculum = () => {
                     className={styles.textArea}
                     placeholder="Write your article here..."
                     value={lecture.content}
-                    onChange={(e) =>
-                      handleUpdateContent(
-                        section.id,
-                        lecture.id,
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleUpdateContent(section.id, lecture.id, e.target.value)}
                   />
-                  <button
-                    className={styles.addLecture}
-                    onClick={() => handleSaveLectureContent()}
-                  >
+                  
+                  <button className={styles.addLecture} onClick={handleSaveLectureContent}>
                     Save
                   </button>
+
+                  <span onClick={() => handleToggleContentType(section.id, lecture.id, null)}> Switch </span>
                 </div>
               )}
 
@@ -295,35 +232,29 @@ const Curriculum = () => {
                     className={styles.videoInput}
                     placeholder="Enter video URL..."
                     value={lecture.content}
-                    onChange={(e) =>
-                      handleUpdateContent(
-                        section.id,
-                        lecture.id,
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleUpdateContent(section.id, lecture.id, e.target.value)}
                   />
-                  <button
-                    className={styles.addLecture}
-                    onClick={() => handleSaveLectureContent()}
-                  >
+                  <button className={styles.addLecture} onClick={handleSaveLectureContent}>
                     Save
                   </button>
+
+                  <span onClick={() => handleToggleContentType(section.id, lecture.id, null)}> Switch </span>
                 </div>
               )}
             </div>
           ))}
 
-          <button
-            className={styles.addLecture}
-            onClick={() => handleAddLecture(section.id)}
-          >
+          <button className={styles.addLecture} onClick={() => handleAddLecture(section.id)}>
             + Add Lecture
           </button>
         </div>
       ))}
 
-      <button className={styles.addSection} onClick={handleAddSection}>
+      <button
+        className={styles.addSection}
+        onClick={handleAddSection}
+        disabled={sections.length > 0 && sections[sections.length - 1].lectures.length === 0}
+      >
         + Add Section
       </button>
     </div>
@@ -331,3 +262,4 @@ const Curriculum = () => {
 };
 
 export default Curriculum;
+
