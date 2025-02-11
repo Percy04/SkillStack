@@ -20,7 +20,7 @@ export const createPublishCourse = async (req, res, next) => {
 export const PublishCourseDetails = async (req, res, next) => {
   const courseId = req.params.courseId;
   const userId = req.query.userId;
-  console.log("hi: " , req.query.userId);
+  // console.log("hi: " , req.query.userId);
   try {
     const course = await PublishCourse.findOne({ index: courseId, createdBy: userId});
     if (!course) {
@@ -133,8 +133,8 @@ export const getPlanCourse = async (req, res, next) => {
 export const updateMessagesPublishCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
   const userId = req.body.messages.userId;
-  console.log("message: " , req.body.messages);
-  console.log("userId: " + userId);
+  // console.log("message: " , req.body.messages);
+  // console.log("userId: " + userId);
   const welcome = req.body.messages.welcomeMessage;
   const congrats = req.body.messages.congratsMessage;
 

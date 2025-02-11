@@ -1,0 +1,99 @@
+.curriculum {
+  min-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  /* border: solid; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1rem;
+  /* margin-bottom: 20px; */
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  /* margin-bottom: 20px; */
+}
+
+.section {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #f8f8f8;
+  border-radius: 5px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  width: 80%;
+  background: transparent;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: red;
+}
+
+.lecture {
+  margin-left: 20px;
+  padding: 10px;
+  border-left: 3px solid #888;
+  background: #fff;
+  margin-top: 10px;
+}
+
+.lectureTitle {
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  width: 70%;
+}
+
+.contentBtn {
+  margin-left: 10px;
+  padding: 5px;
+  border: none;
+  background: purple;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.contentBtn.active {
+  background: darkviolet;
+}
+
+.textArea, .videoInput {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.addLecture, .addSection {
+  background: #6a0dad;
+  color: white;
+  padding: 10px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  /* width: 100%; */
+}
+
+.hide {
+  display: none;
+}
