@@ -2,23 +2,60 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/pages/curriculum.module.css";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import axios from "axios";
+import getUser from "../../utils/getUser";
 
 const Curriculum = () => {
-  const [sections, setSections] = useState([
-    {
-      id: 1,
-      title: "Introduction",
-      lectures: [
+  const [sections, setSections] = useState([]);
+  // const [sections, setSections] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Introduction",
+  //     lectures: [
+  //       {
+  //         id: 1,
+  //         title: "Introduction",
+  //         type: null,
+  //         content: "",
+  //         visible: false,
+  //       },
+  //     ],
+  //   },
+  // ]);
+
+  //GET USER DATA
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getUser();
+      setUserData(data);
+      // console.log(data);
+    };
+
+    fetchUser();
+  }, []);
+
+  const courseId = window.location.pathname.split("/")[3];
+  useEffect(() => {
+    if (!userData) return;
+
+    axios
+      .get(
+        `http://localhost:5000/instructor/course/${courseId}/manage/curriculum`,
         {
-          id: 1,
-          title: "Introduction",
-          type: null,
-          content: "",
-          visible: false,
-        },
-      ],
-    },
-  ]);
+          params: {
+            userId: userData.userId,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setSections(res.data.createCourse.curriculum);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userData]);
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [initialSections, setInitialSections] = useState(sections);
@@ -31,6 +68,24 @@ const Curriculum = () => {
   const handleSave = () => {
     setIsDisabled(true);
     setInitialSections(sections);
+
+    // const formData = {curriculum: sections};
+
+    axios
+      .post(
+        `http://localhost:5000/instructor/course/${courseId}/manage/curriculum`,
+        {
+          sections,
+          userId: userData.userId,
+        }
+      )
+      .then((res) => {
+        console.log("RES: ", res);
+      })
+      .catch((err) => {
+        console.log("error with updating curricululum: ", err);
+      });
+
     console.log("Saved!", sections);
   };
 
@@ -161,7 +216,7 @@ const Curriculum = () => {
 
   useEffect(() => {
     console.log(sections);
-  }, [sections])
+  }, [sections]);
 
   return (
     <div className={styles.curriculum}>
@@ -177,9 +232,14 @@ const Curriculum = () => {
           <input
             className={styles.sectionTitle}
             value={section.title}
-            onChange={(e) => handleUpdateSectionTitle(section.id, e.target.value)}
+            onChange={(e) =>
+              handleUpdateSectionTitle(section.id, e.target.value)
+            }
           />
-          <button className={styles.deleteBtn} onClick={() => handleDeleteSection(section.id)}>
+          <button
+            className={styles.deleteBtn}
+            onClick={() => handleDeleteSection(section.id)}
+          >
             🗑️
           </button>
 
@@ -188,24 +248,41 @@ const Curriculum = () => {
               <input
                 className={styles.lectureTitle}
                 value={lecture.title}
-                onChange={(e) => handleUpdateLectureTitle(section.id, lecture.id, e.target.value)}
+                onChange={(e) =>
+                  handleUpdateLectureTitle(
+                    section.id,
+                    lecture.id,
+                    e.target.value
+                  )
+                }
               />
 
               <button
-                className={`${styles.contentBtn} ${lecture.type === "video" ? styles.hide : ""}`}
-                onClick={() => handleToggleContentType(section.id, lecture.id, "article")}
+                className={`${styles.contentBtn} ${
+                  lecture.type === "video" ? styles.hide : ""
+                }`}
+                onClick={() =>
+                  handleToggleContentType(section.id, lecture.id, "article")
+                }
               >
                 Article
               </button>
 
               <button
-                className={`${styles.contentBtn} ${lecture.type === "article" ? styles.hide : ""}`}
-                onClick={() => handleToggleContentType(section.id, lecture.id, "video")}
+                className={`${styles.contentBtn} ${
+                  lecture.type === "article" ? styles.hide : ""
+                }`}
+                onClick={() =>
+                  handleToggleContentType(section.id, lecture.id, "video")
+                }
               >
                 Video
               </button>
 
-              <button className={styles.deleteBtn} onClick={() => handleDeleteLecture(section.id, lecture.id)}>
+              <button
+                className={styles.deleteBtn}
+                onClick={() => handleDeleteLecture(section.id, lecture.id)}
+              >
                 🗑️
               </button>
 
@@ -215,14 +292,30 @@ const Curriculum = () => {
                     className={styles.textArea}
                     placeholder="Write your article here..."
                     value={lecture.content}
-                    onChange={(e) => handleUpdateContent(section.id, lecture.id, e.target.value)}
+                    onChange={(e) =>
+                      handleUpdateContent(
+                        section.id,
+                        lecture.id,
+                        e.target.value
+                      )
+                    }
                   />
-                  
-                  <button className={styles.addLecture} onClick={handleSaveLectureContent}>
+
+                  <button
+                    className={styles.addLecture}
+                    onClick={handleSaveLectureContent}
+                  >
                     Save
                   </button>
 
-                  <span onClick={() => handleToggleContentType(section.id, lecture.id, null)}> Switch </span>
+                  <span
+                    onClick={() =>
+                      handleToggleContentType(section.id, lecture.id, null)
+                    }
+                  >
+                    {" "}
+                    Switch{" "}
+                  </span>
                 </div>
               )}
 
@@ -232,19 +325,38 @@ const Curriculum = () => {
                     className={styles.videoInput}
                     placeholder="Enter video URL..."
                     value={lecture.content}
-                    onChange={(e) => handleUpdateContent(section.id, lecture.id, e.target.value)}
+                    onChange={(e) =>
+                      handleUpdateContent(
+                        section.id,
+                        lecture.id,
+                        e.target.value
+                      )
+                    }
                   />
-                  <button className={styles.addLecture} onClick={handleSaveLectureContent}>
+                  <button
+                    className={styles.addLecture}
+                    onClick={handleSaveLectureContent}
+                  >
                     Save
                   </button>
 
-                  <span onClick={() => handleToggleContentType(section.id, lecture.id, null)}> Switch </span>
+                  <span
+                    onClick={() =>
+                      handleToggleContentType(section.id, lecture.id, null)
+                    }
+                  >
+                    {" "}
+                    Switch{" "}
+                  </span>
                 </div>
               )}
             </div>
           ))}
 
-          <button className={styles.addLecture} onClick={() => handleAddLecture(section.id)}>
+          <button
+            className={styles.addLecture}
+            onClick={() => handleAddLecture(section.id)}
+          >
             + Add Lecture
           </button>
         </div>
@@ -253,7 +365,10 @@ const Curriculum = () => {
       <button
         className={styles.addSection}
         onClick={handleAddSection}
-        disabled={sections.length > 0 && sections[sections.length - 1].lectures.length === 0}
+        disabled={
+          sections.length > 0 &&
+          sections[sections.length - 1].lectures.length === 0
+        }
       >
         + Add Section
       </button>
@@ -262,4 +377,3 @@ const Curriculum = () => {
 };
 
 export default Curriculum;
-

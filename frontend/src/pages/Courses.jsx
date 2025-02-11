@@ -62,7 +62,7 @@ function Courses() {
   let urls = [
     "http://localhost:5000/instructor/publishcourse",
     "http://localhost:5000/instructor/plancourse",
-    // "http://localhost:5000/instructor/createcourse",
+    "http://localhost:5000/instructor/createcourse",
   ];
 
   const handleNewCourseClick = async () => {

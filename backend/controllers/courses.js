@@ -16,13 +16,15 @@ export const createPublishCourse = async (req, res, next) => {
   }
 };
 
-
 export const PublishCourseDetails = async (req, res, next) => {
   const courseId = req.params.courseId;
   const userId = req.query.userId;
   // console.log("hi: " , req.query.userId);
   try {
-    const course = await PublishCourse.findOne({ index: courseId, createdBy: userId});
+    const course = await PublishCourse.findOne({
+      index: courseId,
+      createdBy: userId,
+    });
     if (!course) {
       res.status(401).json({ message: "Course not created/doesn't exist" });
     } else {
@@ -49,8 +51,9 @@ export const getAllPublishCourses = async (req, res, next) => {
 export const updatePublishCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
   const formData = req.body.formData;
-  // console.log("Req: ", req.body.formData);
+  console.log("FORM DATA Req: ", req.body.formData);
   try {
+    //Ok so the reason replace works here is because in frontend im getting the whole document from db and then sending that whole doc here back
     const courses = await PublishCourse.findOneAndReplace(
       { index: courseId },
       formData
@@ -77,9 +80,6 @@ export const updatePaymentPublishCourse = async (req, res, next) => {
     console.log("nahi hua: " + error);
   }
 };
-
-
-
 
 //PLAN COURSE
 export const createPlanCourse = async (req, res, next) => {
@@ -142,11 +142,67 @@ export const updateMessagesPublishCourse = async (req, res, next) => {
   try {
     const courses = await PublishCourse.findOneAndUpdate(
       { index: courseId, createdBy: userId },
-      {welcome_message: welcome, congratulations_message: congrats}, {new: true}
+      { welcome_message: welcome, congratulations_message: congrats },
+      { new: true }
     );
     res.status(201).json({ courses });
   } catch (error) {
     console.log("nahi hua: " + error);
     res.status(500).json({ message: "Error in updating message." });
+  }
+};
+
+//CREATE COURSE
+export const createCreateCourse = async (req, res, next) => {
+  const createdBy = req.query.userId;
+  const index = req.query.index;
+
+  try {
+    const createCourse = await CreateCourse.create({ createdBy, index });
+    res.status(201).json({ createCourse });
+  } catch (error) {
+    console.log("DB couldn't make 'Create course'", error);
+    res.json({ message: "Create course couldn't be created" });
+  }
+};
+
+export const getCreateCourse = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  console.log("userid: " + req.query);
+  const userId = req.query.userId;
+
+  try {
+    const createCourse = await CreateCourse.findOne({
+      createdBy: userId,
+      index: courseId,
+    });
+    res.status(201).json({ createCourse });
+  } catch (error) {
+    console.log("nahi hua: " + error);
+    res.status(500).json({ message: "Error in updating message." });
+  }
+};
+
+export const updateCreateCourse = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  const userId = req.body.userId;
+  console.log(req.body);
+  console.log("CourseID: ", courseId);
+  console.log("Curriculum: ", req.body.sections);
+  const formData = req.body.sections;
+
+  try {
+    const course = await CreateCourse.findOneAndUpdate(
+      {
+        createdBy: userId,
+        index: courseId,
+      },
+      { curriculum: req.body.sections},
+      { new: true }
+    );
+    res.status(201).json({ course });
+  } catch (error) {
+    console.log("DB couldn't update create course", error);
+    res.json({ message: "Create coures couldn't be created" });
   }
 };
