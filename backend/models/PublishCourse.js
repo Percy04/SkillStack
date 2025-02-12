@@ -56,6 +56,14 @@ const PublishCourseSchema = new mongoose.Schema({
   congratulations_message: {
     type: String,
     default: ""
+  }, 
+  instructor_name: {
+    type: String,
+    default: ""
+  }, 
+  published: {
+    type: Boolean, 
+    default: false
   }
 }, {timestamps:true});
 

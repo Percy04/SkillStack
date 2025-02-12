@@ -5,9 +5,6 @@ import { useState, useEffect } from "react";
 import getUser from "../utils/getUser";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import PublishCourse from "../../../backend/models/PublishCourse.js";
-// import {randomBytes} from "crypto";
-import crypto from "crypto";
 
 function Courses() {
   const [userData, setUserData] = useState(null);
@@ -63,6 +60,7 @@ function Courses() {
     "http://localhost:5000/instructor/publishcourse",
     "http://localhost:5000/instructor/plancourse",
     "http://localhost:5000/instructor/createcourse",
+    // "http://localhost:5000/instructor/allcourses"
   ];
 
   const handleNewCourseClick = async () => {
@@ -112,7 +110,7 @@ function Courses() {
 
     axios.all(requests)
     .then((responses) => {
-      console.log(responses);
+      // console.log(responses);
       // responses.forEach((res) => {
       //   const id = res.data.courseId;
       //   console.log("Data: " , res.data);

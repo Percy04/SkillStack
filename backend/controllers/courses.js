@@ -6,9 +6,14 @@ import PlanCourse from "../models/PlanCourse.js";
 export const createPublishCourse = async (req, res, next) => {
   const createdBy = req.query.userId;
   const index = req.query.index;
-  // console.log("createdby + index: " + createdBy + " " + index);
+  const name = req.query.name;
+  // console.log("createdBY", req.query);
   try {
-    const publishCourse = await PublishCourse.create({ createdBy, index });
+    const publishCourse = await PublishCourse.create({
+      createdBy,
+      index,
+      instructor_name: name,
+    });
     res.status(201).json({ publishCourse });
   } catch (error) {
     console.log("DB couldn't make Plan Course: ", error);
@@ -54,9 +59,11 @@ export const updatePublishCourse = async (req, res, next) => {
   console.log("FORM DATA Req: ", req.body.formData);
   try {
     //Ok so the reason replace works here is because in frontend im getting the whole document from db and then sending that whole doc here back
-    const courses = await PublishCourse.findOneAndReplace(
+    const courses = await PublishCourse.findOneAndUpdate(
       { index: courseId },
-      formData
+      // { published: req.body.formData.published },
+      formData,
+      { new: true }
     );
     res.status(201).json({ courses });
   } catch (error) {
@@ -197,7 +204,7 @@ export const updateCreateCourse = async (req, res, next) => {
         createdBy: userId,
         index: courseId,
       },
-      { curriculum: req.body.sections},
+      { curriculum: req.body.sections },
       { new: true }
     );
     res.status(201).json({ course });
