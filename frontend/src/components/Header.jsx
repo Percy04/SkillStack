@@ -62,14 +62,14 @@ function Header() {
 
   return (
     <header className="header-container">
-      <a href="http://localhost:5173/dashboard" id="skillstack">
+      <a href="" id="skillstack">
         SkillStack
       </a>
       <div className="search-bar">
         <SearchBar />
       </div>
       <div className="header-right">
-        <a href="http://localhost:5173/teacher">Teacher</a>
+        <a href="http://localhost:5173/instructor/courses">Teacher</a>
         {Object.keys(userData)?.length > 0 ? (
           <>
             <a id="myskills-text" href="www.youtube.com">

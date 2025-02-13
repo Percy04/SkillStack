@@ -53,6 +53,19 @@ export const getAllPublishCourses = async (req, res, next) => {
   }
 };
 
+
+//Get specific data of all courses for homepage
+export const getAllCourses = async (req, res, next) => {
+  const projections = {_id: 0, title: 1, level: 1, category: 1, course_image_url: 1, price: 1, instructor_name: 1}
+  try {
+    const courses = await PublishCourse.find({published: true}, projections);
+    res.status(201).json(courses);
+  } catch (err) {
+    res.json({message: "No courses found"});
+  }
+}
+
+
 export const updatePublishCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
   const formData = req.body.formData;

@@ -1,0 +1,98 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  /* border: solid; */
+}
+
+.heading {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.card {
+  /* width: 200px; */
+  height: 230px;
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  text-align: left;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.05s ease-in-out; /* Faster transition */
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.title {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #222;
+  margin: 0;
+  margin-top: 8px;
+}
+
+.instructor {
+  font-size: 0.55rem;
+  color: #666;
+  margin: 0;
+}
+
+.rating {
+  font-size: 0.6rem;
+  color: #f59e0b;
+  margin: 0;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #16a34a;
+  margin-right: 10px;
+}
+
+.originalPrice {
+  font-size: 0.85rem;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+}
+
+.badge {
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: white;
+}
+
+.premium {
+  background: #6b46c1;
+}
+
+.bestseller {
+  background: #22c55e;
+}

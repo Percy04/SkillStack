@@ -4,6 +4,7 @@ const router = express.Router();
 import {updatePublishCourse, getAllPublishCourses, createPublishCourse, PublishCourseDetails, updatePaymentPublishCourse, updateMessagesPublishCourse} from '../controllers/courses.js';
 import {updatePlanCourse, getPlanCourse, createPlanCourse} from "../controllers/courses.js";
 import {createCreateCourse, updateCreateCourse, getCreateCourse} from "../controllers/courses.js";
+import { getAllCourses } from "../controllers/courses.js";
 
 router.get('/publishcourse', createPublishCourse);
 router.get('/plancourse', createPlanCourse);
@@ -17,5 +18,7 @@ router.route('/course/:courseId/manage/curriculum').get(getCreateCourse).post(up
 
 router.patch('/course/:courseId/manage/pricing', updatePaymentPublishCourse);
 router.patch('/course/:courseId/manage/messages', updateMessagesPublishCourse);
+
+router.get('/allcourses', getAllCourses)
 
 export default router;
