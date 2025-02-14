@@ -65,36 +65,38 @@ const CoursesList = () => {
         >
           {dummyCourses.map((course, index) => (
             <SwiperSlide key={index}>
-              <div className={styles.card}>
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className={styles.image}
-                />
-                <h3 className={styles.title}>{course.title}</h3>
-                <p className={styles.instructor}>{course.instructor}</p>
-                <div className={styles.rating}>
-                  ⭐ {course.rating} ({course.reviews.toLocaleString()})
-                </div>
-                <div className={styles.priceContainer}>
-                  <span className={styles.price}>₹{course.price}</span>
-                  <span className={styles.originalPrice}>
-                    ₹{course.original_price}
-                  </span>
-                </div>
-                <div className={styles.tags}>
-                  {course.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className={`${styles.badge} ${
-                        tag === "Premium" ? styles.premium : styles.bestseller
-                      }`}
-                    >
-                      {tag}
+              <a href="dog">
+                <div className={styles.card}>
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className={styles.image}
+                  />
+                  <h3 className={styles.title}>{course.title}</h3>
+                  <p className={styles.instructor}>{course.instructor}</p>
+                  <div className={styles.rating}>
+                    ⭐ {course.rating} ({course.reviews.toLocaleString()})
+                  </div>
+                  <div className={styles.priceContainer}>
+                    <span className={styles.price}>₹{course.price}</span>
+                    <span className={styles.originalPrice}>
+                      ₹{course.original_price}
                     </span>
-                  ))}
+                  </div>
+                  <div className={styles.tags}>
+                    {course.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className={`${styles.badge} ${
+                          tag === "Premium" ? styles.premium : styles.bestseller
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </a>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -113,36 +115,38 @@ const CoursesList = () => {
         >
           {dummyCourses.map((course, index) => (
             <SwiperSlide key={index}>
-              <div className={styles.card}>
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className={styles.image}
-                />
-                <h3 className={styles.title}>{course.title}</h3>
-                <p className={styles.instructor}>{course.instructor}</p>
-                <div className={styles.rating}>
-                  ⭐ {course.rating} ({course.reviews.toLocaleString()})
-                </div>
-                <div className={styles.priceContainer}>
-                  <span className={styles.price}>₹{course.price}</span>
-                  <span className={styles.originalPrice}>
-                    ₹{course.original_price}
-                  </span>
-                </div>
-                <div className={styles.tags}>
-                  {course.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className={`${styles.badge} ${
-                        tag === "Premium" ? styles.premium : styles.bestseller
-                      }`}
-                    >
-                      {tag}
+              <a href="dog">
+                <div className={styles.card}>
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className={styles.image}
+                  />
+                  <h3 className={styles.title}>{course.title}</h3>
+                  <p className={styles.instructor}>{course.instructor}</p>
+                  <div className={styles.rating}>
+                    ⭐ {course.rating} ({course.reviews.toLocaleString()})
+                  </div>
+                  <div className={styles.priceContainer}>
+                    <span className={styles.price}>₹{course.price}</span>
+                    <span className={styles.originalPrice}>
+                      ₹{course.original_price}
                     </span>
-                  ))}
+                  </div>
+                  <div className={styles.tags}>
+                    {course.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className={`${styles.badge} ${
+                          tag === "Premium" ? styles.premium : styles.bestseller
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </a>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -161,36 +165,38 @@ const CoursesList = () => {
         >
           {dummyCourses.map((course, index) => (
             <SwiperSlide key={index}>
-              <div className={styles.card}>
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className={styles.image}
-                />
-                <h3 className={styles.title}>{course.title}</h3>
-                <p className={styles.instructor}>{course.instructor}</p>
-                <div className={styles.rating}>
-                  ⭐ {course.rating} ({course.reviews.toLocaleString()})
-                </div>
-                <div className={styles.priceContainer}>
-                  <span className={styles.price}>₹{course.price}</span>
-                  <span className={styles.originalPrice}>
-                    ₹{course.original_price}
-                  </span>
-                </div>
-                <div className={styles.tags}>
-                  {course.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className={`${styles.badge} ${
-                        tag === "Premium" ? styles.premium : styles.bestseller
-                      }`}
-                    >
-                      {tag}
+              <a href="dog">
+                <div className={styles.card}>
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className={styles.image}
+                  />
+                  <h3 className={styles.title}>{course.title}</h3>
+                  <p className={styles.instructor}>{course.instructor}</p>
+                  <div className={styles.rating}>
+                    ⭐ {course.rating} ({course.reviews.toLocaleString()})
+                  </div>
+                  <div className={styles.priceContainer}>
+                    <span className={styles.price}>₹{course.price}</span>
+                    <span className={styles.originalPrice}>
+                      ₹{course.original_price}
                     </span>
-                  ))}
+                  </div>
+                  <div className={styles.tags}>
+                    {course.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className={`${styles.badge} ${
+                          tag === "Premium" ? styles.premium : styles.bestseller
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </a>
             </SwiperSlide>
           ))}
         </Swiper>
