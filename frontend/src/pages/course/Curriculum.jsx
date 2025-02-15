@@ -7,21 +7,6 @@ import getUser from "../../utils/getUser";
 
 const Curriculum = () => {
   const [sections, setSections] = useState([]);
-  // const [sections, setSections] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Introduction",
-  //     lectures: [
-  //       {
-  //         id: 1,
-  //         title: "Introduction",
-  //         type: null,
-  //         content: "",
-  //         visible: false,
-  //       },
-  //     ],
-  //   },
-  // ]);
 
   //GET USER DATA
   const [userData, setUserData] = useState(null);
@@ -50,7 +35,7 @@ const Curriculum = () => {
       )
       .then((res) => {
         console.log(res.data);
-        setSections(res.data.createCourse.curriculum);
+        setSections(res.data.curriculum);
       })
       .catch((err) => {
         console.log(err);

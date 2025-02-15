@@ -17,6 +17,7 @@ import Pricing from "./pages/course/Pricing.jsx";
 import Goals from "./pages/course/Goals.jsx";
 import Messages from "./pages/course/Messages.jsx";
 import Curriculum from "./pages/course/Curriculum.jsx";
+import CoursePage from "./pages/CoursePage.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -41,6 +42,10 @@ function App() {
       element: <Dashboard />,
     },
     {
+      path: "/course/:index",
+      element: <CoursePage />
+    },
+    {
       path: "/instructor/course/",
       element: <CourseLayout />,
       children: [
@@ -62,32 +67,15 @@ function App() {
         },
         {
           path: "/instructor/course/:courseId/manage/messages",
-          element: <Messages />
+          element: <Messages />,
         },
         {
           path: "/instructor/course/:courseId/manage/curriculum",
-          element: <Curriculum />
-        }
+          element: <Curriculum />,
+        },
       ],
     },
   ]);
-
-  // return (
-  //   <div>
-  //     <Routes>
-  //       <Route path="/" element={<Home />}></Route>
-  //       <Route path="/login" element={<Login />}></Route>
-  //       <Route path="/dashboard" element={<Dashboard />}></Route>
-  //       <Route path="/signup" element={<Signup></Signup>}></Route>
-  //       <Route path="/instructor/courses" element={<Courses></Courses>}></Route>
-  //       <Route path="/instructor/course/manage/basic" element={<CourseLandingPage/>}></Route>
-
-  //       <Route path="*" element={<Error />}></Route>
-
-  //     </Routes>
-  //   </div>
-  // );
-
   return <RouterProvider router={router} />;
 }
 

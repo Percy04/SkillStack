@@ -28,7 +28,7 @@ export const PublishCourseDetails = async (req, res, next) => {
   try {
     const course = await PublishCourse.findOne({
       index: courseId,
-      createdBy: userId,
+      // createdBy: userId,
     });
     if (!course) {
       res.status(401).json({ message: "Course not created/doesn't exist" });
@@ -56,7 +56,7 @@ export const getAllPublishCourses = async (req, res, next) => {
 
 //Get specific data of all courses for homepage
 export const getAllCourses = async (req, res, next) => {
-  const projections = {_id: 0, title: 1, level: 1, category: 1, course_image_url: 1, price: 1, instructor_name: 1}
+  const projections = {_id: 0, index: 1, title: 1, level: 1, category: 1, course_image_url: 1, price: 1, instructor_name: 1}
   try {
     const courses = await PublishCourse.find({published: true}, projections);
     res.status(201).json(courses);
@@ -139,7 +139,7 @@ export const getPlanCourse = async (req, res, next) => {
   // console.log("CourseID: " + courseId);
   try {
     const formData = await PlanCourse.findOne({
-      createdBy: userId,
+      // createdBy: userId,
       index: courseId,
     });
     res.status(201).json(formData);
@@ -161,7 +161,9 @@ export const updateMessagesPublishCourse = async (req, res, next) => {
   // res.send("Hi");
   try {
     const courses = await PublishCourse.findOneAndUpdate(
-      { index: courseId, createdBy: userId },
+      { index: courseId, 
+        createdBy: userId 
+      },
       { welcome_message: welcome, congratulations_message: congrats },
       { new: true }
     );
@@ -188,15 +190,15 @@ export const createCreateCourse = async (req, res, next) => {
 
 export const getCreateCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
-  console.log("userid: " + req.query);
+  // console.log("userid: " + req.query);
   const userId = req.query.userId;
 
   try {
     const createCourse = await CreateCourse.findOne({
-      createdBy: userId,
+      // createdBy: userId,
       index: courseId,
     });
-    res.status(201).json({ createCourse });
+    res.status(201).json( createCourse );
   } catch (error) {
     console.log("nahi hua: " + error);
     res.status(500).json({ message: "Error in updating message." });

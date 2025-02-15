@@ -24,6 +24,9 @@ const CoursesList = () => {
           const image = course.course_image_url;
           const level = course.level;
           const tags = [course.category];
+          // const id = course._id;
+          const index = course.index;
+          
 
           setCourses((prev) => [
             ...prev,
@@ -37,6 +40,7 @@ const CoursesList = () => {
               rating: 4.7,
               reviews: 184005,
               original_price: 2000,
+              index
             },
           ]);
         });
@@ -45,6 +49,15 @@ const CoursesList = () => {
         console.log("err: ", err);
       });
   }, []);
+
+  const makeUrlFriendly = (course) => {
+    return "course/" + course.trimEnd().replace(/\s+/g, '-');
+  }
+
+  useEffect(() => {
+
+          console.log(dummyCourses);
+  }, [dummyCourses])
 
   return (
     <>
@@ -65,7 +78,7 @@ const CoursesList = () => {
         >
           {dummyCourses.map((course, index) => (
             <SwiperSlide key={index}>
-              <a href="dog">
+              <a href={"/course/" + course.index}>
                 <div className={styles.card}>
                   <img
                     src={course.image}

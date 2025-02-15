@@ -62,7 +62,7 @@ function Header() {
 
   return (
     <header className="header-container">
-      <a href="" id="skillstack">
+      <a href="http://localhost:5173/" id="skillstack">
         SkillStack
       </a>
       <div className="search-bar">

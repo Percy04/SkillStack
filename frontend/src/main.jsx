@@ -12,8 +12,6 @@ import CourseLayout from "./components/layout/CourseLayout.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      {/* <App></App> */}
-      {/* <CourseLayout></CourseLayout> */}
     </BrowserRouter>
       <App></App>
   </StrictMode>
