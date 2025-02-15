@@ -1,7 +1,7 @@
 import "../styles/components/header.css";
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

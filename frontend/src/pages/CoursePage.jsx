@@ -29,27 +29,33 @@ function CoursePage() {
       )
       .catch(console.log);
   }, []);
-  
+
   useEffect(() => {
     console.log(course);
-  }, [course])
+  }, [course]);
 
   if (isLoading) {
     return <h1>LOADING</h1>;
   }
 
   return (
-    <>
-    <Header />
-      <div className={styles.backgroundbanner}></div>
+    <div>
+      <Header />
       <div className={styles.container}>
         <div className={styles.leftcontainer}>
           {/* Left Section */}
           <div className={styles.left}>
             <h2>{course.title || "Course Title"}</h2>
             <p>{course.description || "Course description here..."}</p>
-            <p id={styles.id} className={styles.createdBy}>Created by <a href="" className={styles.bold}>{course.instructor_name || "Instructor Name"}</a></p>
-            <p id={styles.updated}>Last updated: {course.lastUpdated || "02/2025"}</p>
+            <p id={styles.id} className={styles.createdBy}>
+              Created by{" "}
+              <a href="" className={styles.bold}>
+                {course.instructor_name || "Instructor Name"}
+              </a>
+            </p>
+            <p id={styles.updated}>
+              Last updated: {course.lastUpdated || "02/2025"}
+            </p>
           </div>
 
           {/* Learning Section */}
@@ -60,7 +66,11 @@ function CoursePage() {
                 <div key={i} className={styles.learnItem}>
                   {point}
                 </div>
-              )) || <div className={styles.learnItem}>Placeholder learning point</div>}
+              )) || (
+                <div className={styles.learnItem}>
+                  Placeholder learning point
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -78,13 +88,28 @@ function CoursePage() {
             <button className={styles.heart}>♥</button>
           </div>
           <button className={styles.buy}>Buy now</button>
-          <input type="text" placeholder="Enter Coupon" className={styles.coupon} />
+          <input
+            type="text"
+            placeholder="Enter Coupon"
+            className={styles.coupon}
+          />
           <button className={styles.apply}>Apply</button>
         </div>
+        {/* <div className={styles.learnBox}>
+          <h3>This course includes: </h3>
+          <div className={styles.learnGrid}>
+            {course.learningObjectives?.map((point, i) => (
+              <div key={i} className={styles.learnItem}>
+                {point}
+              </div>
+            )) || (
+              <div className={styles.learnItem}>Placeholder learning point</div>
+            )}
+          </div>
+        </div> */}
       </div>
-    </>
+    </div>
   );
 }
 
 export default CoursePage;
-
