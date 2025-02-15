@@ -7,6 +7,7 @@ function CoursePage() {
   const courseId = window.location.pathname.split("/").pop();
   const [course, setCourse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [openSections, setOpenSections] = useState({});
 
   useEffect(() => {
     const urls = [
@@ -37,6 +38,13 @@ function CoursePage() {
   if (isLoading) {
     return <h1>LOADING</h1>;
   }
+
+  const toggleSection = (id) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <div>
@@ -73,6 +81,39 @@ function CoursePage() {
               )}
             </div>
           </div>
+
+          {/* Course Content Section */}
+          <div className={styles.courseContentBox}>
+            <h3 className={styles.courseContentTitle}>Course Content</h3>
+            <p className={styles.courseContentSubtitle}>
+              {course.curriculum?.length || 0} sections
+            </p>
+            {course.curriculum?.map((section) => (
+              <div key={section.id} className={styles.section}>
+                <button
+                  className={styles.sectionButton}
+                  onClick={() => toggleSection(section.id)}
+                >
+                  <span>{section.title}</span>
+                  <span>{openSections[section.id] ? "▲" : "▼"}</span>
+                </button>
+                {openSections[section.id] && (
+                  <div className={styles.lectures}>
+                    {section.lectures.map((lecture) => (
+                      <div key={lecture.id} className={styles.lecture}>
+                        <span>{lecture.title}</span>
+                        {lecture.type === "video" && (
+                          <a href={lecture.content} target="_blank">
+                            Watch
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Right Section */}
@@ -95,18 +136,6 @@ function CoursePage() {
           />
           <button className={styles.apply}>Apply</button>
         </div>
-        {/* <div className={styles.learnBox}>
-          <h3>This course includes: </h3>
-          <div className={styles.learnGrid}>
-            {course.learningObjectives?.map((point, i) => (
-              <div key={i} className={styles.learnItem}>
-                {point}
-              </div>
-            )) || (
-              <div className={styles.learnItem}>Placeholder learning point</div>
-            )}
-          </div>
-        </div> */}
       </div>
     </div>
   );
