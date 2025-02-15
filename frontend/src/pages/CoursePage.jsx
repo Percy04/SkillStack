@@ -94,18 +94,32 @@ function CoursePage() {
                   className={styles.sectionButton}
                   onClick={() => toggleSection(section.id)}
                 >
-                  <span>{section.title}</span>
+                  <div className={styles.lectureLeft}>
+                    <span>{section.title}</span>
+                  </div>
                   <span>{openSections[section.id] ? "▲" : "▼"}</span>
                 </button>
                 {openSections[section.id] && (
                   <div className={styles.lectures}>
                     {section.lectures.map((lecture) => (
                       <div key={lecture.id} className={styles.lecture}>
-                        <span>{lecture.title}</span>
-                        {lecture.type === "video" && (
-                          <a href={lecture.content} target="_blank">
-                            Watch
-                          </a>
+                        {/* <span>{lecture.title}</span> */}
+                        {lecture.type === "video" ? (
+                          <div className={styles.lectureLeft}>
+                            <img
+                              className={styles.imageSizing}
+                              src="/youtube.png"
+                            ></img>
+                            <span>{lecture.title}</span>
+                          </div>
+                        ) : (
+                          <div className={styles.lectureLeft}>
+                            <img
+                              className={styles.imageSizing}
+                              src="/document.png"
+                            ></img>
+                            <span>{lecture.title}</span>
+                          </div>
                         )}
                       </div>
                     ))}
@@ -123,7 +137,7 @@ function CoursePage() {
             alt="Preview"
             className={styles.preview}
           />
-          <p className={styles.price}>₹{course.price || "3,999"}</p>
+          <p className={styles.price}>₹{course.price || "4,999"}</p>
           <div className={styles.buttons}>
             <button className={styles.cart}>Add to cart</button>
             <button className={styles.heart}>♥</button>
