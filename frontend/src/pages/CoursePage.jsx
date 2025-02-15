@@ -146,6 +146,37 @@ function CoursePage() {
             <h3 className={styles.courseContentTitle}>Description</h3>
             <p>{course.description}</p>
           </div>
+
+          {/* Instructors Section */}
+          <div className={styles.instructors}>
+            <h3>Instructors</h3>
+            {course.instructors?.map((instructor, index) => (
+              <div key={index} className={styles.instructorCard}>
+                <img
+                  src={instructor.image || "https://via.placeholder.com/100"}
+                  alt={instructor.name}
+                  className={styles.instructorImage}
+                />
+                <div className={styles.instructorInfo}>
+                  <h4>
+                    <a
+                      href={instructor.profile_link}
+                      className={styles.instructorName}
+                    >
+                      {instructor.name}
+                    </a>
+                  </h4>
+                  <p className={styles.instructorTitle}>{instructor.title}</p>
+                  <p className={styles.instructorStats}>
+                    ⭐ {instructor.rating} Instructor Rating | 👥{" "}
+                    {instructor.students} Students | 📚 {instructor.courses}{" "}
+                    Courses
+                  </p>
+                  <p className={styles.instructorBio}>{instructor.bio}</p>
+                </div>
+              </div>
+            )) || <p>No instructors listed.</p>}
+          </div>
         </div>
 
         {/* Right Section */}

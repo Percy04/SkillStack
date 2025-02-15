@@ -18,8 +18,10 @@ function Signup() {
         email,
         password,
       })
-      .then(function (response) {
-        console.log(response);
+      .then(function (res) {
+        console.log(res.data.token);
+        localStorage.setItem("token", res.data.token)
+        window.location.href = "http://localhost:5173/";
       })
       .catch(function (error) {
         console.log(error);

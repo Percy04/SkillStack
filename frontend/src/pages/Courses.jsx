@@ -64,19 +64,6 @@ function Courses() {
   ];
 
   const handleNewCourseClick = async () => {
-    // console.log(userData);
-    //   try {
-    //     axios.post("http://localhost:5000/instructor/course", {
-    //       userData
-    //     })
-    //     .then(function (res) {
-    //       const id = res.data.courseId;
-    //       navigate(`/instructor/course/${id}/manage/basics`);
-    //     })
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-
     if (!userData) return;
 
     //Create a hash to use as index for finding all the different collections belonging to one course

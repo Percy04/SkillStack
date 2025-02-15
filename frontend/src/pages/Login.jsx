@@ -24,7 +24,7 @@ function Login() {
 
         // console.log(response);
         // window.open.href=("");
-        window.location.href = "http://localhost:5173/dashboard";
+        window.location.href = "http://localhost:5173/";
       })
       .catch(function (error) {
         console.log(error);

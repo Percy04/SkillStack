@@ -55,6 +55,10 @@ function Header() {
     getUser();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData])
+
   const logout = () => {
     localStorage.removeItem("token");
     window.open("http://localhost:5000/logout", "_self");
