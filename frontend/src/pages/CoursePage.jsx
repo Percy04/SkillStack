@@ -94,10 +94,14 @@ function CoursePage() {
                   className={styles.sectionButton}
                   onClick={() => toggleSection(section.id)}
                 >
-                  <div className={styles.lectureLeft}>
-                    <span>{section.title}</span>
+                  {/* <div className={styles.sectionText}> */}
+                  <span>{section.title}</span>
+                  {/* </div> */}
+
+                  <div className={styles.sectionRight}>
+                    <span>{section.lectures.length} lectures</span>
+                    <span>{openSections[section.id] ? "▲" : "▼"}</span>
                   </div>
-                  <span>{openSections[section.id] ? "▲" : "▼"}</span>
                 </button>
                 {openSections[section.id] && (
                   <div className={styles.lectures}>

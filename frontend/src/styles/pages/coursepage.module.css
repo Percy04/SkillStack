@@ -191,8 +191,13 @@ ul {
   border: none;
   border: solid 1px rgb(181, 180, 180);
   border-collapse: seperate;
-  /* margin: 1px; */
+  /* display: flex;
+  flex-direction: column; */
 }
+
+/* .sectionText {
+    display: flex;
+} */
 
 .sectionButton {
   background: rgb(240, 238, 238);
@@ -208,16 +213,21 @@ ul {
   border: none;
 }
 
+.sectionRight {
+    display: flex;
+    gap: 0.7rem;
+}
+
 .lecture {
   display: flex;
-  padding: 0.2rem;
+  padding: 0.5rem;
   border: none;
 }
 
 .lectures {
     /* display: flex;
     flex-direction: column; */
-    padding: 0.6rem;
+    padding: 0.8rem;
 }
 
 .lectureLeft {
