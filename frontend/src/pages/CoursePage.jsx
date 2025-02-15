@@ -54,7 +54,7 @@ function CoursePage() {
           {/* Left Section */}
           <div className={styles.left}>
             <h2>{course.title || "Course Title"}</h2>
-            <p>{course.description || "Course description here..."}</p>
+            <p>{course.subtitle || "Course description here..."}</p>
             <p id={styles.id} className={styles.createdBy}>
               Created by{" "}
               <a href="" className={styles.bold}>
@@ -131,6 +131,20 @@ function CoursePage() {
                 )}
               </div>
             ))}
+          </div>
+
+          <div className={styles.courseContentBox}>
+            <h3 className={styles.courseContentTitle}>Requirements</h3>
+            <ul>
+              {course.requirements?.map((req, index) => (
+                <li key={index}>{req}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.courseContentBox}>
+            <h3 className={styles.courseContentTitle}>Description</h3>
+            <p>{course.description}</p>
           </div>
         </div>
 
