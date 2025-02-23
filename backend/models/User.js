@@ -35,6 +35,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  createdCoursesIndex: {
+    type: Array,
+    default: [""],
+  },
+  purchasedCoursesIndex: {
+    type: Array,
+    default: [""],
+  },
   linkedIn: {
     type: String,
     default: "",

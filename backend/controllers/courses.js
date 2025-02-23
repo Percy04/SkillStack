@@ -1,6 +1,7 @@
 import PublishCourse from "../models/PublishCourse.js";
 import CreateCourse from "../models/CreateCourse.js";
 import PlanCourse from "../models/PlanCourse.js";
+import User from "../models/User.js";
 // import StatusCode from "http-status-codes";
 
 export const createPublishCourse = async (req, res, next) => {
@@ -53,18 +54,25 @@ export const getAllPublishCourses = async (req, res, next) => {
   }
 };
 
-
 //Get specific data of all courses for homepage
 export const getAllCourses = async (req, res, next) => {
-  const projections = {_id: 0, index: 1, title: 1, level: 1, category: 1, course_image_url: 1, price: 1, instructor_name: 1}
+  const projections = {
+    _id: 0,
+    index: 1,
+    title: 1,
+    level: 1,
+    category: 1,
+    course_image_url: 1,
+    price: 1,
+    instructor_name: 1,
+  };
   try {
-    const courses = await PublishCourse.find({published: true}, projections);
+    const courses = await PublishCourse.find({ published: true }, projections);
     res.status(201).json(courses);
   } catch (err) {
-    res.json({message: "No courses found"});
+    res.json({ message: "No courses found" });
   }
-}
-
+};
 
 export const updatePublishCourse = async (req, res, next) => {
   const courseId = req.params.courseId;
@@ -161,9 +169,7 @@ export const updateMessagesPublishCourse = async (req, res, next) => {
   // res.send("Hi");
   try {
     const courses = await PublishCourse.findOneAndUpdate(
-      { index: courseId, 
-        createdBy: userId 
-      },
+      { index: courseId, createdBy: userId },
       { welcome_message: welcome, congratulations_message: congrats },
       { new: true }
     );
@@ -198,7 +204,7 @@ export const getCreateCourse = async (req, res, next) => {
       // createdBy: userId,
       index: courseId,
     });
-    res.status(201).json( createCourse );
+    res.status(201).json(createCourse);
   } catch (error) {
     console.log("nahi hua: " + error);
     res.status(500).json({ message: "Error in updating message." });
@@ -226,5 +232,32 @@ export const updateCreateCourse = async (req, res, next) => {
   } catch (error) {
     console.log("DB couldn't update create course", error);
     res.json({ message: "Create coures couldn't be created" });
+  }
+};
+
+//User Updates
+export const userNewCourse = async (req, res, next) => {
+  const { userId, index, name } = req.query;
+  console.log("USER REQ: ", req.query);
+
+  try {
+    const course = await User.findOne({ _id: userId });
+    console.log("COURES: " , course)
+
+    if (!course) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!Array.isArray(course.createdCoursesIndex)) {
+      course.createdCoursesIndex = [];
+    }
+
+    course.createdCoursesIndex.push(index);
+    await course.save();
+
+    console.log("USER STUFF: " , course)
+    res.status(201).json(course);
+  } catch (error) {
+    res.status(500).json({ message: "OH NO: error.message" });
   }
 };

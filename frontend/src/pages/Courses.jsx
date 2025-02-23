@@ -63,6 +63,7 @@ function Courses() {
     "http://localhost:5000/instructor/publishcourse",
     "http://localhost:5000/instructor/plancourse",
     "http://localhost:5000/instructor/createcourse",
+    "http://localhost:5000/instructor/newcourse",
   ];
 
   const handleNewCourseClick = async () => {
@@ -88,27 +89,28 @@ function Courses() {
 
     const createCourseData = {
       ...userData,
-      index
-    }
+      index,
+    };
 
     console.log(createCourseData);
 
-  const requests = urls.map((url) => 
-    axios.get(url, { params: createCourseData })
-  );
+    const requests = urls.map((url) =>
+      axios.get(url, { params: createCourseData })
+    );
 
-    axios.all(requests)
-    .then((responses) => {
-      // console.log(responses);
-      // responses.forEach((res) => {
-      //   const id = res.data.courseId;
-      //   console.log("Data: " , res.data);
-      // })
-      navigate(`/instructor/course/${index}/manage/basics`);
-    })
-    .catch((err) => {
-      console.log("Error in creating all courses, " , err);
-    })
+    axios
+      .all(requests)
+      .then((responses) => {
+        console.log(responses);
+        // responses.forEach((res) => {
+        //   const id = res.data.courseId;
+        //   console.log("Data: " , res.data);
+        // })
+        navigate(`/instructor/course/${index}/manage/basics`);
+      })
+      .catch((err) => {
+        console.log("Error in creating all courses, ", err);
+      });
   };
 
   return (
