@@ -48,7 +48,10 @@ function Courses() {
   }, []);
 
   useEffect(() => {
-    if (userData) getCourses(userData);
+    if (userData) {
+      console.log(userData);
+      getCourses(userData);
+    }
   }, [userData]);
 
   if (isLoading || !userData) {
@@ -60,7 +63,6 @@ function Courses() {
     "http://localhost:5000/instructor/publishcourse",
     "http://localhost:5000/instructor/plancourse",
     "http://localhost:5000/instructor/createcourse",
-    // "http://localhost:5000/instructor/allcourses"
   ];
 
   const handleNewCourseClick = async () => {

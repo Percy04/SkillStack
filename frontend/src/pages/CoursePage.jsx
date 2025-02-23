@@ -2,20 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../components/Header";
 import styles from "../styles/pages/coursepage.module.css";
-
+import { Star, Users, Book, ChevronDown } from "lucide-react";
 function CoursePage() {
   const courseId = window.location.pathname.split("/").pop();
   const [course, setCourse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openSections, setOpenSections] = useState({});
-
+  const [isInstructorBioExpanded, setIsInstructorBioExpanded] = useState(false);
   useEffect(() => {
     const urls = [
       `http://localhost:5000/instructor/course/${courseId}/manage/goals`,
       `http://localhost:5000/instructor/course/${courseId}/manage/basics`,
       `http://localhost:5000/instructor/course/${courseId}/manage/curriculum`,
     ];
-
     axios
       .all(urls.map((link) => axios.get(link)))
       .then(
@@ -30,22 +29,18 @@ function CoursePage() {
       )
       .catch(console.log);
   }, []);
-
   useEffect(() => {
     console.log(course);
   }, [course]);
-
   if (isLoading) {
     return <h1>LOADING</h1>;
   }
-
   const toggleSection = (id) => {
     setOpenSections((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
   };
-
   return (
     <div>
       <Header />
@@ -65,7 +60,6 @@ function CoursePage() {
               Last updated: {course.lastUpdated || "02/2025"}
             </p>
           </div>
-
           {/* Learning Section */}
           <div className={styles.learnBox}>
             <h3>What you'll learn</h3>
@@ -81,7 +75,6 @@ function CoursePage() {
               )}
             </div>
           </div>
-
           {/* Course Content Section */}
           <div className={styles.courseContentBox}>
             <h3 className={styles.courseContentTitle}>Course Content</h3>
@@ -97,7 +90,6 @@ function CoursePage() {
                   {/* <div className={styles.sectionText}> */}
                   <span>{section.title}</span>
                   {/* </div> */}
-
                   <div className={styles.sectionRight}>
                     <span>{section.lectures.length} lectures</span>
                     <span>{openSections[section.id] ? "▲" : "▼"}</span>
@@ -133,6 +125,7 @@ function CoursePage() {
             ))}
           </div>
 
+          {/* {Requirements} */}
           <div className={styles.courseContentBox}>
             <h3 className={styles.courseContentTitle}>Requirements</h3>
             <ul>
@@ -142,40 +135,82 @@ function CoursePage() {
             </ul>
           </div>
 
+          {/* {Description} */}
           <div className={styles.courseContentBox}>
             <h3 className={styles.courseContentTitle}>Description</h3>
             <p>{course.description}</p>
           </div>
 
-          {/* Instructors Section */}
-          <div className={styles.instructors}>
-            <h3>Instructors</h3>
-            {course.instructors?.map((instructor, index) => (
-              <div key={index} className={styles.instructorCard}>
+          {/* Instructor Section */}
+          <div className={styles.courseContentBox}>
+            <h3 className={styles.courseContentTitle}>Instructors</h3>
+            <div className={styles.instructorSection}>
+              <div className={styles.instructorProfile}>
                 <img
-                  src={instructor.image || "https://via.placeholder.com/100"}
-                  alt={instructor.name}
+                  src={
+                    course.instructor_image || "https://via.placeholder.com/128"
+                  }
+                  alt={course.instructor_name}
                   className={styles.instructorImage}
                 />
                 <div className={styles.instructorInfo}>
-                  <h4>
-                    <a
-                      href={instructor.profile_link}
-                      className={styles.instructorName}
-                    >
-                      {instructor.name}
-                    </a>
-                  </h4>
-                  <p className={styles.instructorTitle}>{instructor.title}</p>
-                  <p className={styles.instructorStats}>
-                    ⭐ {instructor.rating} Instructor Rating | 👥{" "}
-                    {instructor.students} Students | 📚 {instructor.courses}{" "}
-                    Courses
+                  <a href="#" className={styles.instructorName}>
+                    {course.instructor_name || "Instructor Name"}
+                  </a>
+                  <p className={styles.instructorTitle}>
+                    {course.instructor_title || "Instructor Title"}
                   </p>
-                  <p className={styles.instructorBio}>{instructor.bio}</p>
+
+                  <div className={styles.instructorStats}>
+                    <div className={styles.statItem}>
+                      <Star className={styles.icon} />
+                      <span>
+                        {course.instructor_rating || "4.6"} Instructor Rating
+                      </span>
+                    </div>
+                    <div className={styles.statItem}>
+                      <Users className={styles.icon} />
+                      <span>
+                        {course.instructor_reviews || "166,598"} Reviews
+                      </span>
+                    </div>
+                    <div className={styles.statItem}>
+                      <Users className={styles.icon} />
+                      <span>
+                        {course.instructor_students || "768,842"} Students
+                      </span>
+                    </div>
+                    <div className={styles.statItem}>
+                      <Book className={styles.icon} />
+                      <span>{course.instructor_courses || "24"} Courses</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.instructorBio}>
+                    <p
+                      className={
+                        isInstructorBioExpanded ? "" : styles.truncated
+                      }
+                    >
+                      {course.instructor_bio || "Instructor bio..."}
+                    </p>
+                    <button
+                      onClick={() =>
+                        setIsInstructorBioExpanded(!isInstructorBioExpanded)
+                      }
+                      className={styles.showMoreBtn}
+                    >
+                      Show {isInstructorBioExpanded ? "less" : "more"}
+                      <ChevronDown
+                        className={`${styles.chevron} ${
+                          isInstructorBioExpanded ? styles.chevronRotated : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
-            )) || <p>No instructors listed.</p>}
+            </div>
           </div>
         </div>
 
@@ -203,5 +238,4 @@ function CoursePage() {
     </div>
   );
 }
-
 export default CoursePage;

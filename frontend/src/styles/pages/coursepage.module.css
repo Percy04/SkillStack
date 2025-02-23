@@ -6,17 +6,14 @@
   /* border: solid; */
   /* padding-top: 2rem; */
 }
-
 .leftcontainer {
   max-width: 700px;
   /* border: solid; */
 }
-
 .left,
 .right {
   border-radius: 8px;
 }
-
 .right {
   width: 17%;
   background: #423838;
@@ -26,52 +23,42 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 8px;
 }
-
 h2,
 p {
   margin-bottom: 10px;
 }
-
 .left > h2 {
   font-size: 2.5rem;
   font-weight: 600;
 }
-
 .left > p {
   font-size: 1.3rem;
 }
-
 #id {
   margin-top: 2rem;
   font-size: 0.9rem;
 }
-
 .bold {
   color: rgb(98, 93, 246);
   text-decoration: underline;
 }
-
 #updated {
   font-size: 0.9rem;
 }
-
 .preview {
   width: 100%;
   border-radius: 8px;
 }
-
 .price {
   font-size: 22px;
   font-weight: bold;
   margin: 15px 0;
 }
-
 .buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-
 .cart,
 .heart,
 .buy,
@@ -83,12 +70,10 @@ p {
   cursor: pointer;
   font-size: 16px;
 }
-
 .heart {
   flex: 1;
   min-width: 45px;
 }
-
 .cart {
   background: #6a0dad;
   color: white;
@@ -107,7 +92,6 @@ p {
   color: white;
   margin-top: 10px;
 }
-
 .coupon {
   width: 100%;
   padding: 8px;
@@ -116,12 +100,10 @@ p {
   border: none;
   text-align: center;
 }
-
 ul {
     padding: 0;
     padding-left: 1.6rem;
 }
-
 .learnBox {
   /* background: white; */
   color: black;
@@ -135,7 +117,6 @@ ul {
   border: solid 1px rgba(0, 0, 0, 0.2);
   /* border: solid 1px rgb(181, 180, 180); */
 }
-
 .learnBox h3 {
   text-align: left;
   margin-bottom: 15px;
@@ -143,27 +124,23 @@ ul {
   font-weight: 600;
   color: rgba(0, 0, 0, 0.8);
 }
-
 .learnGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
-
 .learnItem {
   display: flex;
   align-items: flex-start;
   font-size: 0.9rem;
   color: rgb(76, 74, 74);
 }
-
 .learnItem::before {
   content: "✔";
   color: #6a0dad;
   margin-right: 8px;
   font-weight: bold;
 }
-
 .courseContentBox {
   border-radius: 8px;
   padding: 1.5rem;
@@ -171,20 +148,17 @@ ul {
   border: solid 1px rgb(181, 180, 180);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 .courseContentTitle {
   font-size: 1.5rem;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.8);
   margin-bottom: 10px;
 }
-
 .courseContentSubtitle {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.6);
   margin-bottom: 15px;
 }
-
 .section {
   border: none;
   border: solid 1px rgb(181, 180, 180);
@@ -192,11 +166,9 @@ ul {
   /* display: flex;
   flex-direction: column; */
 }
-
 /* .sectionText {
     display: flex;
 } */
-
 .sectionButton {
   /* background: rgb(240, 238, 238); */
   color: black;
@@ -210,30 +182,117 @@ ul {
   font-weight: 500;
   border: none;
 }
-
 .sectionRight {
     display: flex;
     gap: 0.7rem;
 }
-
 .lecture {
   display: flex;
   padding: 0.5rem;
   border: none;
 }
-
 .lectures {
     /* display: flex;
     flex-direction: column; */
     padding: 0.8rem;
 }
-
 .lectureLeft {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
-
 .imageSizing {
   width: 1rem;
+}
+/* Instructor Section Styles */
+.instructorSection {
+  margin-top: 1rem;
+}
+.instructorProfile {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+.instructorImage {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.instructorInfo {
+  flex: 1;
+}
+.instructorName {
+  color: #6a0dad;
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.instructorName:hover {
+  color: #4a0875;
+  text-decoration: underline;
+}
+.instructorTitle {
+  color: #666;
+  font-size: 0.975rem;
+  margin-bottom: 1rem;
+}
+.instructorStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4a4a4a;
+  font-size: 0.9rem;
+}
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.statItem:first-child .icon {
+  color: #ffd700;
+}
+.instructorBio {
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.showMoreBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #6a0dad;
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+.showMoreBtn:hover {
+  color: #4a0875;
+}
+.chevron {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.3s ease;
+}
+.chevronRotated {
+  transform: rotate(180deg);
 }
